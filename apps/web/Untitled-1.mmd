@@ -1,0 +1,24 @@
+---
+references:
+  - "File: /apps/web/next.config.ts"
+generationTime: 2026-06-06T14:18:29.159Z
+---
+flowchart TD
+    A["Start Function"] --> B{Check Condition}
+    B -->|Yes| C["Process Data"]
+    B -->|No| D["Handle Error"]
+    C --> E[(Save to DB)]
+    E --> F["Return Success"]
+    D --> G["Log Error"]
+
+    H["Start: 'apps/web/next.config.ts' loaded"] --> J["Import 'NextConfig' type"]
+    J --> K["Import 'withSerwist' from '@serwist/next'"]
+    K --> L["Define 'nextConfig' const"]
+    L --> M["Set 'images.remotePatterns' = ['https://images.unsplash.com']"]
+    J --> N["Call 'withSerwist' to create 'withPWA'"]
+    N --> O{"Is 'withPWA' applied to 'nextConfig'?"}
+    O -->|Yes| P["Apply 'withPWA' to 'nextConfig'"]
+    O -->|No| Q["Keep 'nextConfig' unchanged (potential oversight)"]
+    P --> R["Export default (resulting config)"]
+    Q --> R
+    R --> S["End"]

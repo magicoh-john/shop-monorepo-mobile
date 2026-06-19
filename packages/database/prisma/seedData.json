@@ -1,0 +1,456 @@
+[
+  {
+    "category": "중간평가 — 영역 1: 웹 디자인 · 브라우저 렌더링 · DOM · Figma",
+    "title": "HTML 구조와 DOM 트리",
+    "content": "🎯 검증 목표 — HTML 태그가 브라우저에 의해 DOM 노드로 변환되는 원리를 이해하는가. 부모·자식·형제 관계를 DOM 트리 구조로 읽을 수 있는가\n아래 HTML 코드에 대한 설명으로 옳지 않은 것은?\n```html\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>쇼핑몰</title>\n  </head>\n  <body>\n    <header>\n      <h1>로고</h1>\n      <nav>\n        <a href=\"/\">홈</a>\n        <a href=\"/products\">상품</a>\n      </nav>\n    </header>\n    <main>\n      <p>신상품을 만나보세요</p>\n    </main>\n  </body>\n</html>\n```\n",
+    "points": 2,
+    "options": [
+      "① 브라우저는 이 HTML을 위에서 아래로 순서대로 파싱하여 DOM 트리를 생성한다",
+      "② <header>와 <main>은 <body>의 자식 노드이며, 서로 형제 관계이다",
+      "③ <nav> 안의 두 <a> 태그는 <header>의 직접 자식 노드이다",
+      "④ DOM 트리가 완성된 후에야 브라우저가 화면에 내용을 표시할 수 있다"
+    ],
+    "correctAnswer": "③",
+    "explanation": "💡 출제 의도: ③이 정답(옳지 않은 것). 두 <a> 태그는 <nav>의 자식 노드이지, <header>의 직접 자식이 아니다. DOM 트리에서 직접 자식(direct child) 과 자손(descendant) 의 차이를 구분하는 것이 핵심이다. CSS 선택자에서 header > a(직접 자식)와 header a(모든 자손)의 차이도 이 개념에서 출발한다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 1: 웹 디자인 · 브라우저 렌더링 · DOM · Figma",
+    "title": "CSS 우선순위 — Specificity",
+    "content": "🎯 검증 목표 — CSS 선택자 우선순위(specificity) 규칙을 이해하는가. 디자이너가 스타일이 적용되지 않는 상황의 원인을 진단할 수 있는가\n아래 CSS 코드에서 <p class=\"desc\" id=\"intro\">안내문</p> 요소에 최종 적용되는 글자색으로 올바른 것은?\n```css\n/* (A) */\np {\n  color: black;\n}\n\n/* (B) */\n.desc {\n  color: blue;\n}\n\n/* (C) */\n#intro {\n  color: green;\n}\n\n/* (D) */\np.desc {\n  color: red;\n}\n```\n",
+    "points": 2,
+    "options": [
+      "① black — 나중에 선언된 규칙보다 먼저 선언된 규칙이 우선한다",
+      "② blue — class 선택자가 가장 많이 사용되므로 우선 적용된다",
+      "③ green — id 선택자는 class·태그 선택자보다 우선순위가 높다",
+      "④ red — 태그와 class를 함께 사용한 선택자가 id보다 우선한다"
+    ],
+    "correctAnswer": "③",
+    "explanation": "💡 출제 의도: ③이 정답. CSS 우선순위는 id(100) > class(10) > 태그(1) 순이다. #intro는 100점, p.desc는 11점(태그1+class10), .desc는 10점, p는 1점으로 #intro가 가장 높다. 디자이너들이 \"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"타일이 왜 안 먹히지?\"를 경험하는 가장 흔한 원인이 바로 specificity 충돌이다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 1: 웹 디자인 · 브라우저 렌더링 · DOM · Figma",
+    "title": "Figma 핵심 개념 — 잘못된 것 고르기",
+    "content": "🎯 검증 목표 — Figma의 핵심 개념(Auto Layout, Component, Variant, Frame vs Group)을 정확히 이해하는가. 코드 전환 관점에서 각 개념의 역할을 알고 있는가\n아래 Figma 핵심 개념 설명 중 옳지 않은 것은?\n",
+    "points": 2,
+    "options": [
+      "① Auto Layout — 자식 요소를 가로 또는 세로 방향으로 자동 정렬하며, 내용이 늘어나도 프레임이 자동으로 크기를 조절한다. CSS의 flexbox와 유사한 개념이다",
+      "② Component — 반복 사용되는 UI 요소를 하나의 마스터로 만들어두면, 인스턴스를 여러 곳에 배치할 수 있다. 마스터를 수정하면 모든 인스턴스에 자동 반영된다. React의 컴포넌트 개념과 유사하다",
+      "③ Frame — Figma에서 화면이나 컨테이너를 만드는 기본 단위다. Group과 달리 Auto Layout, 클립 콘텐츠, 제약(Constraints) 등의 속성을 설정할 수 있다",
+      "④ Variant — Component의 여러 상태(크기, 색상, 활성화 여부 등)를 별도 파일로 저장하는 기능이다. 버튼의 Primary/Secondary 스타일을 각각 다른 파일로 관리할 때 사용한다"
+    ],
+    "correctAnswer": "④",
+    "explanation": "💡 출제 의도: ④가 정답(옳지 않은 것). Variant는 별도 파일이 아니라 하나의 Component 안에서 여러 상태를 정의하는 기능이다. 버튼의 Primary/Secondary/Disabled 같은 상태를 하나의 Component Set 내에서 관리하며, 코드로 변환 시 React 컴포넌트의 variant prop과 직접 대응된다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 1: 웹 디자인 · 브라우저 렌더링 · DOM · Figma",
+    "title": "Figma 디자인 → 코드 전환을 고려한 디자인 방법",
+    "content": "🎯 검증 목표 — Figma에서 디자인할 때 코드(CSS/React) 전환이 수월하도록 작업하는 올바른 습관을 알고 있는가. 디자이너가 개발자와 협업할 때 발생하는 흔한 문제의 원인을 이해하는가\nFigma 디자인을 코드로 전환할 때 가장 수월한 작업 방식으로 올바른 것은?\n",
+    "points": 2,
+    "options": [
+      "① 모든 요소를 Group으로 묶어 관리하면 레이어 구조가 단순해져 개발자가 읽기 쉽다",
+      "② 여백(padding, gap)을 Auto Layout으로 설정하지 않고, 요소 사이 간격을 눈대중으로 배치하면 디자이너가 자유롭게 조정할 수 있어 더 좋다",
+      "③ 반복되는 카드·버튼·입력 필드를 Component로 만들고, 색상·폰트·간격을 Variables(토큰)로 정의하면 CSS 변수와 React 컴포넌트로 1:1 대응이 가능하다",
+      "④ 폰트, 색상, 그림자 등 스타일은 각 레이어마다 직접 입력하는 것이 나중에 수정하기 편하다"
+    ],
+    "correctAnswer": "③",
+    "explanation": "💡 출제 의도: ③이 정답. 코드 전환을 고려한 Figma 디자인의 핵심은 세 가지다. 첫째, Auto Layout → CSS flexbox와 1:1 대응. 둘째, Component + Variant → React 컴포넌트 + props와 1:1 대응. 셋째, Variables(Design Token) → CSS 변수(--color-primary, --spacing-md)와 1:1 대응. ①의 Group은 CSS 구조를 반영하지 않으며 ②④는 일관성 없는 코드를 만드는 원인이 된다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 1: 웹 디자인 · 브라우저 렌더링 · DOM · Figma",
+    "title": "JavaScript DOM 직접 조작 vs React Virtual DOM",
+    "content": "아래 두 코드는 버튼 클릭 시 숫자를 1 증가시키는 동일한 기능을 구현한 것이다.\n(A)와 (B)의 동작 방식 차이를 DOM 조작 관점에서 서술하고, React 방식(B)의 장점을 1가지 이상 쓰시오.\n\n```html\n<!-- (A) 순수 JavaScript -->\n<p id=\"count\">0</p>\n<button onclick=\"increment()\">+1</button>\n<script>\n  let count = 0;\n  function increment() {\n    count++;\n    document.getElementById('count').innerText = count;\n  }\n</script>\n```\n\n```tsx\n// (B) React\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <p>{count}</p>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n    </div>\n  );\n}\n```\n\n작성 지침: (A)와 (B)의 DOM 처리 방식 차이(1~2문장) + React 방식의 장점(1가지 이상)을 서술하시오.\n\n| 항목 | 서술 |\n| --- | --- |\n| (A)와 (B)의 차이 |  |\n| React 방식의 장점 |  |\n",
+    "points": 7,
+    "options": [],
+    "correctAnswer": "",
+    "explanation": "💡 채점 기준 (각 1.5점, 총 3점)\n",
+    "type": "SHORT_ANSWER"
+  },
+  {
+    "category": "중간평가 — 영역 6: 보너스",
+    "title": "파일 구조 보고 4요소 유형 식별",
+    "content": "아래는 우리 쇼핑몰 프로젝트 apps/web/src/의 일부 파일 목록이다.\n각 파일이 Next.js 다음 요소 중 어디에 해당하는지 빈칸을 채우시오.\n(Server Component / Client Component / Server Action / Route Handler)\n\n```\napps/web/src/\n│\n├── app/\n│   ├── (shop)/\n│   │   ├── page.tsx                          → (A)\n│   │   └── products/[id]/page.tsx            → (B)\n│   │\n│   ├── (auth)/\n│   │   └── login/page.tsx                    → (C)\n│   │\n│   └── api/\n│       ├── products/route.ts                 → (D)\n│       └── cart/route.ts                     → (D)\n│\n└── features/\n    ├── auth/\n    │   ├── auth.actions.ts                   → (E)\n    │   └── components/\n    │       ├── LoginForm.tsx                 → (F)\n    │       └── RegisterForm.tsx              → (F)\n    │\n    └── order/\n        ├── order.actions.ts                  → (E)\n        └── components/\n            └── CheckoutForm.tsx              → (F)\n```\n\n아래는 각 파일의 코드 단서이다.\n\n```tsx\n// app/(shop)/page.tsx\nexport default async function HomePage() { ... }\n// app/(shop)/products/[id]/page.tsx\nexport default async function ProductDetailPage({ params }) { ... }\n// app/(auth)/login/page.tsx\nexport default async function LoginPage() { return <LoginForm />; }\n// app/api/products/route.ts\nexport async function GET(req: NextRequest) { ... }\n// features/auth/auth.actions.ts\n\"use server\";\nexport async function register(formData: FormData) { ... }\n// features/auth/components/LoginForm.tsx\n\"use client\";\nexport default function LoginForm() { ... }\n```\n\n작성 지침: (A) ~ (F)의 빈칸에 해당하는 요소를 보기에서 골라 작성하시오.\n\n| 문항 | 배점 |\n| --- | --- |\n| (A) | 1.5점 |\n| (B) | 1.5점 |\n| (C) | 1.5점 |\n| (D) | 1.5점 |\n| (E) | 1.0점 |\n| (F) | 1.0점 |\n\n답변 예시)\n(A) - Server Component\n(B) - Client Component\n(C) - Server Action\n",
+    "points": 8,
+    "options": [],
+    "correctAnswer": "",
+    "explanation": "💡 채점 기준 (각 0.8점 × 6 ≈ 5점, 반올림 적용)\n",
+    "type": "SHORT_ANSWER"
+  },
+  {
+    "category": "중간평가 — 영역 4",
+    "title": "요청을 처리하는 파일 식별",
+    "content": "\n[공통 전제: 아래 폴더 구조는 4문항 전체에 공통으로 적용됩니다]\n```\napps/web/src/app/\n├── layout.tsx                 ← ❶ 루트 레이아웃\n│\n├── (shop)/                    ← 라우트 그룹\n│   ├── layout.tsx             ← ❷ 쇼핑몰 레이아웃 (헤더/푸터)\n│   └── page.tsx               ← ❸ 홈 페이지\n│\n├── (auth)/                    ← 라우트 그룹\n│   ├── layout.tsx\n│   └── login/\n│       └── page.tsx\n│\n└── api/\n    └── products/\n        └── route.ts\n```\n\n🎯 검증 목표 — 라우트 그룹 괄호 폴더가 URL 세그먼트에서 무시된다는 원칙을 알고, localhost:3000/ 요청에 응답하는 파일을 정확히 식별할 수 있는가\n브라우저에서 localhost:3000/을 입력했을 때, 이 요청을 처리하는 파일로 가장 올바른 것은?\n",
+    "points": 2,
+    "options": [
+      "① app/layout.tsx",
+      "② app/(auth)/login/page.tsx",
+      "③ app/(shop)/page.tsx",
+      "④ app/api/products/route.ts"
+    ],
+    "correctAnswer": "③",
+    "explanation": "💡 출제 의도: (shop)은 라우트 그룹이므로 URL 세그먼트에서 무시된다. 따라서 (shop)/page.tsx → URL: /로 매핑된다. ②의 함정 — (auth)도 무시되지만 login/은 일반 폴더이므로 URL은 /login이 된다. ④의 함정 — route.ts는 Route Handler로, 페이지 화면이 아닌 API 엔드포인트이다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 4",
+    "title": "레이아웃 중첩 구조",
+    "content": "🎯 검증 목표 — Next.js App Router에서 page.tsx가 렌더링될 때 상위 레이아웃들이 중첩으로 감싸지는 원리를 이해하는가. 어떤 레이아웃이 어떤 순서로 적용되는지 알고 있는가\nlocalhost:3000/에 접속했을 때 브라우저에 전달되는 HTML 구조의 레이아웃 중첩 순서로 가장 올바른 것은?\n",
+    "points": 2,
+    "options": [
+      "①\n```\napp/(shop)/page.tsx\n  └── app/(shop)/layout.tsx\n        └── app/layout.tsx\n```",
+      "②\n```\napp/layout.tsx\n  └── app/(shop)/layout.tsx\n        └── app/(shop)/page.tsx\n```",
+      "③\n```\napp/(shop)/layout.tsx\n  └── app/layout.tsx\n        └── app/(shop)/page.tsx\n```",
+      "④\n```\napp/layout.tsx\n  └── app/(shop)/page.tsx\n        └── app/(shop)/layout.tsx\n```"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 출제 의도: ②가 정답. 루트에 가까운 레이아웃이 가장 바깥쪽을 감싸고, 안쪽으로 갈수록 더 구체적인 레이아웃이 적용된다. app/layout.tsx(전역 설정 + TanStack Query Provider) → app/(shop)/layout.tsx(헤더/푸터) → app/(shop)/page.tsx(홈 콘텐츠) 순이다. ①③은 안쪽이 바깥쪽을 감싸는 잘못된 구조이다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 4",
+    "title": "라우트 그룹과 URL 매핑 규칙",
+    "content": "🎯 검증 목표 — 라우트 그룹 괄호 폴더는 URL에서 무시되지만, 그 안의 일반 폴더명은 URL에 반영된다는 규칙을 정확히 이해하는가. (auth)/login/page.tsx가 / 요청 대상이 아닌 이유를 설명할 수 있는가\n위 폴더 구조에서 각 파일의 URL 매핑으로 옳지 않은 것은?\n",
+    "points": 2,
+    "options": [
+      "① app/(shop)/page.tsx → URL: /",
+      "② app/(auth)/login/page.tsx → URL: /login",
+      "③ app/(auth)/login/page.tsx → URL: /",
+      "④ app/api/products/route.ts → URL: /api/products"
+    ],
+    "correctAnswer": "③",
+    "explanation": "💡 출제 의도: ③이 정답(옳지 않은 것). login/은 괄호가 없는 일반 폴더이므로 URL 세그먼트에 반영된다. 라우트 그룹으로 처리되려면 반드시 (login)/처럼 괄호로 감싸야 한다. 만약 (auth)/login/page.tsx가 /로 매핑된다면 (shop)/page.tsx와 URL이 충돌하여 Route Conflict Error가 발생한다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 4",
+    "title": "쇼핑몰 홈 화면 전체 처리 흐름 — 순서 배열",
+    "content": "🎯 검증 목표 — 브라우저가 localhost:3000/을 요청한 순간부터 사용자가 완전한 화면을 보기까지의 전체 흐름을 순서대로 파악하고 있는가. 라우트 탐색 → 레이아웃 구성 → DB 조회 → HTML 전송 → Hydration의 흐름을 연결할 수 있는가\n쇼핑몰에서 메인 페이지가 요청되었을 때 아래 (가)~(바) 단계를 올바른 순서로 배열한 것은?\n\n(가) app/layout.tsx → app/(shop)/layout.tsx → app/(shop)/page.tsx 순서로 레이아웃 트리를 구성한다\n(나) 브라우저가 localhost:3000/ HTTP GET 요청을 보낸다\n(다) JS 번들 다운로드 완료 후 정적 HTML에 이벤트 핸들러가 연결되는 Hydration이 실행된다\n(라) app/(shop)/page.tsx(Server Component)가 Promise.all로 Prisma를 통해 DB에서 카테고리·신상품·베스트상품을 직접 조회한다\n(마) Next.js가 app/ 폴더를 탐색해 (shop) 라우트 그룹을 통과하여 /에 매핑되는 app/(shop)/page.tsx를 찾는다\n(바) 조회된 데이터가 채워진 완성된 HTML을 브라우저로 전송하고, 브라우저는 즉시 화면을 표시한다\n",
+    "points": 4,
+    "options": [
+      "① (나) → (마) → (가) → (라) → (바) → (다)",
+      "② (나) → (가) → (마) → (라) → (바) → (다)",
+      "③ (나) → (마) → (라) → (가) → (바) → (다)"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: ①이 정답. 흐름: 브라우저 요청(나) → 파일 탐색(마) → 레이아웃 구성(가) → DB 조회(라) → HTML 전송(바) → Hydration(다). ②는 파일 탐색 전에 레이아웃을 구성하는 잘못된 순서. ③은 레이아웃 구성 전에 DB를 조회하는 잘못된 순서.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 5: Claude AI 사용 개념 · LLM 기본 이론",
+    "title": "LLM 동작 원리 — 토큰과 컨텍스트 윈도우",
+    "content": "🎯 검증 목표 — LLM이 텍스트를 처리하는 단위(토큰)와 한 번에 처리할 수 있는 한계(컨텍스트 윈도우)를 이해하는가. 확률적 생성의 의미를 알고 있는가\nLLM(Large Language Model)의 동작 방식에 대한 설명으로 옳지 않은 것은?\n",
+    "points": 2,
+    "options": [
+      "① LLM은 텍스트를 '토큰' 단위로 처리한다. 토큰은 단어와 정확히 일치하지 않으며, \"안녕하세요\"는 여러 토큰으로 분리될 수 있다",
+      "② LLM의 응답은 확률적으로 생성된다. 같은 질문을 해도 매번 동일한 답변이 나오지 않을 수 있는 이유가 이 때문이다",
+      "③ 컨텍스트 윈도우란 LLM이 한 번의 요청에서 처리할 수 있는 최대 토큰 수를 의미한다. 대화가 길어질수록 앞부분의 내용이 컨텍스트 윈도우를 벗어날 수 있다",
+      "④ LLM은 인터넷에서 실시간으로 정보를 검색해 답변을 생성하므로, 항상 최신 정보를 제공할 수 있다"
+    ],
+    "correctAnswer": "④",
+    "explanation": "💡 출제 의도: ④가 정답(옳지 않은 것). 기본 LLM은 학습 데이터의 지식 컷오프(knowledge cutoff) 이후의 정보를 알지 못한다. 실시간 검색은 별도의 도구(web search tool)가 연결된 경우에만 가능하다. Claude Code가 생성한 코드에서 존재하지 않는 라이브러리 버전을 사용하거나 deprecated된 API를 쓰는 이유도 이와 연관된다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 5: Claude AI 사용 개념 · LLM 기본 이론",
+    "title": "CLAUDE.md의 역할 — 바이브코딩 워크플로우",
+    "content": "🎯 검증 목표 — CLAUDE.md가 AI 바이브코딩 워크플로우에서 어떤 역할을 하는지 이해하는가. 단순한 메모 파일이 아닌 AI에게 프로젝트 맥락을 주입하는 컨텍스트 문서임을 알고 있는가\nCLAUDE.md에 대한 설명으로 가장 올바른 것은?\n",
+    "points": 2,
+    "options": [
+      "① CLAUDE.md는 Claude Code가 자동으로 생성하는 파일로, 개발자가 직접 수정할 수 없다",
+      "② CLAUDE.md는 프로젝트의 기술 스택, 폴더 구조, 코딩 컨벤션 등을 기록해두는 파일로, Claude Code가 이 파일을 읽어 프로젝트 맥락을 이해한 뒤 코드를 생성한다",
+      "③ CLAUDE.md는 .gitignore처럼 Git에서 제외해야 하는 파일 목록을 관리하는 파일이다",
+      "④ CLAUDE.md는 Claude API 키를 저장하는 환경설정 파일이다"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 출제 의도: ②가 정답. CLAUDE.md는 AI가 \"이 프로젝트가 어떤 프로젝트인가\"를 이해하도록 돕는 맥락 주입 문서다. 기술 스택(버전 포함), 폴더 구조, 금지 패턴, 코딩 컨벤션 등을 기록해두면 Claude Code가 프로젝트에 맞는 일관된 코드를 생성한다. PRD가 \"무엇을 만드는가\"라면 CLAUDE.md는 \"어떻게 만드는가\"의 기준이다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 5: Claude AI 사용 개념 · LLM 기본 이론",
+    "title": "AI 생성 코드 검증 필요성 — Hallucination과 버전 오류",
+    "content": "\"Claude Code가 생성한 코드라도 반드시 직접 검토하고 이해해야 한다\"는 원칙의 근거로 가장 올바른 것은?\n",
+    "points": 2,
+    "options": [
+      "① AI는 그럴듯하게 코드를 생성하지만 실제로 존재하지 않는 함수나 API를 만들어내기도 하고(Hallucination), 학습 데이터에 최신 버전이 없어 이미 deprecated된 문법을 사용할 수도 있기 때문이다",
+      "② AI가 생성한 코드는 항상 성능이 좋지 않고 버그가 많기 때문이다",
+      "③ AI는 TypeScript를 지원하지 않으므로 타입 오류가 발생하기 때문이다",
+      "④ AI 생성 코드는 저작권 문제로 상업적으로 사용할 수 없기 때문이다"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: ①이 정답. AI 코드 검토가 필요한 두 가지 핵심 이유 — (1) Hallucination: 존재하지 않는 함수·API를 자신 있게 생성함. (2) 학습 데이터 한계: 학습 시점 이후의 라이브러리 버전 변경이나 deprecated API를 알지 못해 구버전 문법을 사용할 수 있음.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 4: Prisma ORM · PostgreSQL · 데이터 모델링",
+    "title": "외래키 제약과 엔티티 연관관계",
+    "content": "🎯 검증 목표 — 1:N, N:M 관계를 실제 쇼핑몰 도메인(상품-카테고리, 주문-주문상품)에 대입해 구분할 수 있는가. 외래키가 어느 테이블에 위치하는지 알고 있는가\n아래 쇼핑몰 ERD에 대한 설명으로 옳지 않은 것은?\n```\nCategory ──────< Product >────── OrderItem >────── Order\n  (1)             (N)  (1)           (N)    (N)      (1)\n```\n",
+    "points": 2,
+    "options": [
+      "① Product 테이블의 categoryId는 Category.id를 참조하는 외래키이며, 하나의 카테고리에 여러 상품이 속할 수 있는 1:N 관계이다",
+      "② Order와 Product는 OrderItem을 통해 연결되는 N:M 관계이다. 하나의 주문에 여러 상품이 포함될 수 있고, 하나의 상품이 여러 주문에 포함될 수 있다",
+      "③ OrderItem 테이블에 price 컬럼이 별도로 있는 이유는, 주문 시점의 가격을 기록해야 하기 때문이다. Product.price는 나중에 변경될 수 있다",
+      "④ 외래키 제약이 설정되어 있으면, Category를 삭제해도 해당 카테고리에 속한 Product 데이터는 자동으로 보존된다"
+    ],
+    "correctAnswer": "④",
+    "explanation": "💡 출제 의도: ④가 정답(옳지 않은 것). 외래키 제약이 설정된 경우, 참조 중인 부모 레코드를 삭제하면 제약 위반 오류가 발생하거나 CASCADE 설정에 따라 자식 데이터가 함께 삭제된다. \"자동으로 보존된다\"는 설명은 틀렸다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 4: Prisma ORM · PostgreSQL · 데이터 모델링",
+    "title": "Prisma schema — @relation과 include",
+    "content": "아래 Prisma schema를 보고, @relation 지시자의 역할을 가장 정확하게 설명한 것은?\n```prisma\nmodel Product {\n  id         String     @id @default(cuid())\n  name       String\n  price      Int\n  categoryId String\n  category   Category   @relation(fields: [categoryId], references: [id])\n  orderItems OrderItem[]\n}\n\nmodel Category {\n  id       String    @id @default(cuid())\n  name     String\n  products Product[]\n}\n```\n```ts\nconst product = await prisma.product.findUnique({\n  where: { id: '123' },\n  include: { category: true },\n});\n```\n",
+    "points": 2,
+    "options": [
+      "① categoryId는 외래키 컬럼으로, schema.prisma에 명시해야 DB에 실제 컬럼이 생성된다",
+      "② @relation(fields: [categoryId], references: [id])는 Product.categoryId가 Category.id를 참조한다는 외래키 관계를 선언한다",
+      "③ include: { category: true }를 사용하면 해당 Product와 연관된 Category 데이터를 함께 조회할 수 있다",
+      "④ orderItems OrderItem[]는 실제 DB 컬럼이 아니라, Prisma가 쿼리 시 JOIN으로 채워주는 가상 관계 필드이다"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 ①②③④ 모두 올바른 설명이다. 이 문제는 그 중 @relation 지시자의 역할을 직접 설명한 ②를 고르는 문제이다. ① categoryId는 schema에 명시해야 하는 실제 외래키 컬럼. ③ include는 연관 레코드만 가져오며 테이블 전체를 반환하지 않는다. ④ OrderItem[]은 실제 DB 컬럼이 아닌 가상 관계 필드.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 4: Prisma ORM · PostgreSQL · 데이터 모델링",
+    "title": "Prisma Client CRUD — findMany 조건 쿼리",
+    "content": "🎯 검증 목표 — findMany의 where, orderBy, take, include 옵션을 실제 요구사항에 맞게 조합할 수 있는가\n아래 요구사항을 만족하는 Prisma 쿼리로 가장 올바른 것은?\n요구사항: 카테고리 ID가 'cat-001'인 상품 중, 최신 등록순으로 상위 8개를 가져오되 카테고리 정보도 함께 조회한다\n",
+    "points": 2,
+    "options": [
+      "①\n```ts\nawait prisma.product.findMany({\n  where: { categoryId: 'cat-001' },\n  orderBy: { createdAt: 'desc' },\n  take: 8,\n  include: { category: true },\n});\n```",
+      "②\n```ts\nawait prisma.product.findMany({\n  filter: { categoryId: 'cat-001' },\n  sort: { createdAt: 'desc' },\n  limit: 8,\n  join: { category: true },\n});\n```",
+      "③\n```ts\nawait prisma.product.findMany({\n  where: { categoryId: 'cat-001' },\n  orderBy: { createdAt: 'asc' },\n  take: 8,\n  include: { category: true },\n});\n```",
+      "④\n```ts\nawait prisma.product.findMany({\n  where: { id: 'cat-001' },\n  orderBy: { createdAt: 'desc' },\n  take: 8,\n});\n```"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: ②는 SQL 문법과 혼동한 함정(filter, sort, limit, join은 Prisma 문법이 아님). ③은 orderBy: { createdAt: 'asc' }로 오래된 순 정렬이므로 \"최신 등록순\"이 아님. ④는 where: { id: 'cat-001' }로 상품 ID로 필터링하는 잘못된 조건.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 4: Prisma ORM · PostgreSQL · 데이터 모델링",
+    "title": "Prisma CLI 명령어 의미",
+    "content": "🎯 검증 목표 — Prisma 개발 워크플로우에서 사용하는 핵심 CLI 명령어 3가지의 실행 시점과 역할을 정확히 설명할 수 있는가\n\n```bash\n# (A)\nnpx prisma migrate dev --name 작업명\n\n# (B)\nnpx prisma generate\n\n# (C)\nnpx prisma db seed\n```\n\n각 명령어 (A), (B), (C)의 실행 시점과 역할을 서술하시오.\n",
+    "points": 5,
+    "options": [],
+    "correctAnswer": "",
+    "explanation": "💡 채점 기준 (각 1점, 총 3점)\n- (A) prisma migrate dev — schema.prisma 파일을 수정한 후 실행. SQL 마이그레이션 파일을 생성하고 실제 DB에 테이블 변경사항을 적용한다. --name은 마이그레이션 파일명에 붙는 작업 설명이다\n- (B) prisma generate — schema.prisma를 기반으로 TypeScript용 Prisma Client 코드를 생성(재생성)한다. schema를 수정했거나 처음 설치 후 반드시 실행해야 prisma.product.findMany() 같은 타입 안전 쿼리를 사용할 수 있다\n- (C) prisma db seed — prisma/seed.ts에 정의된 초기 데이터를 DB에 삽입한다. 개발 환경에서 테스트용 상품·카테고리·유저 데이터를 넣을 때 사용한다\n",
+    "type": "SHORT_ANSWER"
+  },
+  {
+    "category": "중간평가 — 영역 4: Prisma ORM · PostgreSQL · 데이터 모델링",
+    "title": "Prisma Client의 역할",
+    "content": "🎯 검증 목표 — Prisma Client가 무엇인지, 어떤 역할을 하는지 이해하는가\nPrisma Client의 역할은 무엇인가?\n",
+    "points": 8,
+    "options": [],
+    "correctAnswer": "",
+    "explanation": "💡 채점 기준\n- Prisma Client는 schema.prisma를 기반으로 자동 생성되는 TypeScript용 DB 쿼리 클라이언트이다\n- prisma.user.findMany(), prisma.product.create() 등 타입 안전한 메서드로 PostgreSQL에 쿼리를 실행할 수 있게 해준다\n",
+    "type": "SHORT_ANSWER"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "4요소 역할 구분",
+    "content": "🎯 검증 목표 — Server Component · Client Component · Server Action · Route Handler 4요소의 선언 방식과 실행 위치를 한눈에 구분할 수 있는가\n아래 표의 빈칸 (A) ~ (D) 에 들어갈 내용으로 가장 올바르게 짝지어진 것은?\n\n| 요소 | 선언 방식 | 실행 위치 | 주요 역할 |\n|---|---|---|---|\n| Server Component | 없음 (기본값) | **(A)** | 초기 HTML 생성, SEO 처리 |\n| Client Component | **(B)** | 브라우저 | 클릭·입력 등 상호작용 처리 |\n| Server Action | **(C)** | 서버 | DB 변경, 서버 로직 실행 |\n| Route Handler | app/api/**/route.ts | 서버 | **(D)** |\n",
+    "points": 2,
+    "options": [
+      "① (A) 브라우저 / (B) \"use client\" / (C) \"use server\" / (D) REST API 엔드포인트, 외부 시스템 연동",
+      "② (A) 서버 / (B) \"use client\" / (C) \"use server\" / (D) REST API 엔드포인트, 외부 시스템 연동",
+      "③ (A) 서버 / (B) \"use server\" / (C) \"use client\" / (D) 초기 HTML 생성, SEO 처리",
+      "④ (A) 서버 / (B) \"use client\" / (C) \"use server\" / (D) 클릭·입력 등 상호작용 처리"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 출제 의도: ③은 \"use client\"와 \"use server\" 선언을 바꿔 놓은 함정. ①은 Server Component 실행 위치를 브라우저로 잘못 기재한 함정. Server Component는 선언 없이 기본값이 서버라는 점도 중요하다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "Server Component — 메인 화면 구성 방식",
+    "content": "🎯 검증 목표 — Server Component가 Prisma를 사용해 데이터를 조회하고 화면을 구성하는 흐름을 이해하는가\n다음 코드는 메인 화면을 어떻게 구성하고 있는지 올바르게 설명한 것을 고르시오.\n```tsx\n// app/(shop)/page.tsx\nexport default async function HomePage() {\n  const products = await prisma.product.findMany({ take: 8 });\n  return <ProductGrid products={products} />;\n}\n```\n",
+    "points": 2,
+    "options": [
+      "① 서버에서 prisma.product.findMany()로 상품 8개를 조회한 뒤, ProductGrid 컴포넌트에 products props로 전달하여 HTML을 완성해 브라우저로 전송한다",
+      "② 브라우저에서 fetch('/api/products')로 데이터를 가져온 뒤 ProductGrid에 전달해 화면을 렌더링한다",
+      "③ useEffect 안에서 비동기로 상품을 조회하고, 상태가 업데이트되면 ProductGrid가 리렌더링된다",
+      "④ getServerSideProps로 데이터를 미리 가져온 뒤 ProductGrid에 props로 전달한다"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: ①이 정답. 이 컴포넌트는 Server Component로, 서버에서 Prisma를 통해 DB를 직접 조회하고 완성된 HTML을 브라우저로 전송한다. ②③은 Client Component 방식, ④는 Pages Router 방식(Next.js 구버전)이다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "Client Component — \"use client\" 선언 필요 시점",
+    "content": "🎯 검증 목표 — \"use client\"를 반드시 선언해야 하는 경우와 선언하지 않아도 되는 경우를 구분할 수 있는가\n다음 중 \"use client\" 선언이 반드시 필요한 파일은?\n",
+    "points": 2,
+    "options": [
+      "①\n```tsx\n// app/(shop)/products/page.tsx\nexport default async function ProductsPage() {\n  const products = await prisma.product.findMany();\n  return <ProductList products={products} />;\n}\n```",
+      "②\n```tsx\n// components/AddToCartButton.tsx\nexport default function AddToCartButton({ productId }) {\n  const [added, setAdded] = useState(false);\n  return (\n    <button onClick={() => setAdded(true)}>\n      {added ? '담김' : '장바구니 담기'}\n    </button>\n  );\n}\n```",
+      "③\n```tsx\n// app/(shop)/page.tsx\nexport default async function HomePage() {\n  const categories = await prisma.category.findMany();\n  return <CategoryList categories={categories} />;\n}\n```",
+      "④\n```tsx\n// app/api/products/route.ts\nexport async function GET() {\n  const products = await prisma.product.findMany();\n  return Response.json(products);\n}\n```"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 출제 의도: ②가 정답. useState, onClick 같은 브라우저 전용 기능을 사용하는 컴포넌트는 반드시 \"use client\"를 선언해야 한다. ①③④는 모두 async로 서버에서 Prisma를 호출하는 Server Component이므로 선언 불필요.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "Server Action — \"use server\" 선언 이유",
+    "content": "🎯 검증 목표 — \"use server\" 선언의 의미를 알고 있는가\n아래 코드는 회원가입을 처리하는 서버 액션과 클라이언트 컴포넌트이다. auth.actions.ts에 \"use server\"를 선언한 이유로 올바른 것은?\n```tsx\n// features/auth/auth.actions.ts\n\"use server\";\n\nexport async function register(formData: FormData) {\n  const hashedPassword = await bcrypt.hash(formData.get(\"password\"), 10);\n  await prisma.user.create({ data: { ... } });\n  return { success: true };\n}\n```\n```tsx\n// features/auth/components/RegisterForm.tsx\n\"use client\";\nimport { register } from \"@/features/auth/auth.actions\";\n\nexport default function RegisterForm() {\n  const onSubmit = async (data) => {\n    const result = await register(formData); // ← 여기\n  };\n}\n```\n",
+    "points": 2,
+    "options": [
+      "① Client Component에서 이 파일의 함수를 호출할 수 있도록, 서버에서만 실행되는 Server Action으로 등록하기 위해서이다",
+      "② 이 파일을 브라우저 번들에 포함시키기 위해서이다",
+      "③ TypeScript 타입 검사를 서버에서만 수행하도록 지정하기 위해서이다",
+      "④ app/api/ 폴더 없이 REST API 엔드포인트를 자동 생성하기 위해서이다"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: ①이 정답. Server Component는 선언 없이도 서버에서만 실행되지만, Client Component에서 호출하는 함수는 \"use server\"를 선언해야 Server Action으로 등록된다. 이 선언이 없으면 bcrypt, prisma 같은 서버 전용 코드가 클라이언트 번들에 포함되어 에러가 발생한다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "Route Handler — \"use server\" 불필요한 이유",
+    "content": "🎯 검증 목표 — Route Handler가 \"use server\" 없이도 서버에서 실행되는 이유를 파일 위치 기반으로 설명할 수 있는가. Server Action과의 근본적인 차이(URL 유무)를 구분하는가\n아래 Route Handler에 대한 설명으로 옳지 않은 것은?\n```tsx\n// app/api/products/route.ts\nexport async function GET(req: NextRequest) {\n  const products = await prisma.product.findMany();\n  return Response.json({ items: products });\n}\n```\n",
+    "points": 2,
+    "options": [
+      "① 이 파일에는 \"use server\" 선언이 필요 없다. app/api/ 경로에 위치한 route.ts 파일은 Next.js가 자동으로 서버 전용 HTTP 엔드포인트로 처리하기 때문이다",
+      "② 클라이언트 컴포넌트에서 fetch('/api/products')로 이 핸들러를 호출할 수 있다",
+      "③ 이 핸들러는 /api/products 라는 URL을 가지며, 모바일 앱 등 외부 클라이언트도 이 URL로 접근할 수 있다",
+      "④ Route Handler는 Server Action과 동일한 방식으로 동작하므로, 서로 대체해서 사용할 수 있다"
+    ],
+    "correctAnswer": "④",
+    "explanation": "💡 출제 의도: ④가 정답(옳지 않은 것). Route Handler는 URL이 있는 HTTP 엔드포인트이고, Server Action은 URL 없이 함수 호출로 실행되는 RPC이다. 쿠키 직접 제어, 외부 OAuth 콜백처럼 URL이 필요한 경우는 Route Handler만 가능하다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "Server Action vs Route Handler — 선택 기준",
+    "content": "🎯 검증 목표 — 상황에 따라 Server Action과 Route Handler 중 무엇을 선택해야 하는지 판단할 수 있는가\n다음 상황 중 Route Handler를 반드시 사용해야 하는 경우는?\n",
+    "points": 2,
+    "options": [
+      "① 회원가입 폼에서 이메일·비밀번호를 받아 DB에 유저를 생성하는 경우",
+      "② 주문하기 버튼 클릭 시 서버에서 가격을 검증하고 DB에 주문을 생성하는 경우",
+      "③ Google OAuth 로그인 후 구글 서버가 /api/auth/callback/google로 콜백을 보내는 경우",
+      "④ 관리자가 상품 정보를 수정하는 폼을 제출하는 경우"
+    ],
+    "correctAnswer": "③",
+    "explanation": "💡 출제 의도: ③이 정답. 외부 서버(Google)가 우리 앱의 특정 URL로 콜백을 보내는 경우, 그 URL을 처리할 Route Handler가 반드시 필요하다. ①②④는 내부 폼·버튼에서 DB를 변경하는 작업이므로 Server Action이 더 적합하다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "Server Component → Client Component props 전달",
+    "content": "아래는 서버에서 조회한 상품 등록일을 Client Component에 전달하는 올바른 코드이다.\n이 코드에서 `product.createdAt.toISOString()`을 사용하는 이유로 올바른 것은?\n```tsx\n// Server Component\nexport default async function ProductDetailPage({ params }) {\n  const product = await prisma.product.findUnique({ where: { id: params.id } });\n\n  return (\n    <ProductActions createdAt={product.createdAt.toISOString()} />\n  );\n}\n\n// Client Component\n'use client';\nexport default function ProductActions({ createdAt }: { createdAt: string }) {\n  return <div>등록일: {new Date(createdAt).toLocaleDateString()}</div>;\n}\n```\n",
+    "points": 2,
+    "options": [
+      "① Server Component에서 Client Component로 props를 전달할 때 Date 타입은 JSON 직렬화가 안 되므로 문자열로 변환해야 한다",
+      "② toISOString()을 호출하면 브라우저가 사용자의 시간대에 맞게 날짜를 자동 변환해주기 때문이다",
+      "③ Prisma는 Date 타입을 반환하지 않으므로 직접 변환해야 한다",
+      "④ Client Component에서 Date 객체를 그대로 사용하면 보안 문제가 발생하기 때문이다"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: ①이 정답. Server → Client 간 props 전달은 JSON 직렬화를 거치므로 Date 객체는 그대로 전달할 수 없다. toISOString()으로 문자열로 변환한 뒤 전달하고, Client에서 new Date()로 다시 변환해 사용한다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 3: Next.js 4요소",
+    "title": "회원가입 흐름 서술",
+    "content": "🎯 검증 목표 — 수업 중 진행한 shop-monorepo-oauth 프로젝트에서 회원가입이 어떤 순서로 진행되는지 이해하고 있는가\nshop-monorepo-oauth 프로젝트에서 회원가입이 진행되는 순서와, 각 단계에서 화면이 어떻게 처리되는지 서술하시오.\n",
+    "points": 16,
+    "options": [],
+    "correctAnswer": "",
+    "explanation": "💡 채점 기준\n- 회원가입 페이지 접속 → 서버에서 RegisterPage(Server Component) 렌더링 후 HTML 전송\n- 사용자가 폼 입력 → RegisterForm(Client Component)에서 유효성 검사\n- 가입하기 버튼 클릭 → Server Action 호출, 서버에서 bcrypt 암호화 + DB 저장\n- 가입 완료 → 로그인 페이지로 이동\n",
+    "type": "SHORT_ANSWER"
+  },
+  {
+    "category": "중간평가 — 영역 2: React 핵심 개념",
+    "title": "JSX 반환 규칙",
+    "content": "🎯 검증 목표 — JSX는 반드시 하나의 루트 요소를 반환해야 한다는 규칙을 이해하는가\n다음 중 정상적으로 렌더링되는 JSX 코드는?\n",
+    "points": 2,
+    "options": [
+      "①\n```tsx\nexport default function Card() {\n  return (\n    <h2>제목</h2>\n    <p>내용</p>\n  );\n}\n```",
+      "②\n```tsx\nexport default function Card() {\n  return (\n    <>\n      <h2>제목</h2>\n      <p>내용</p>\n    </>\n  );\n}\n```",
+      "③\n```tsx\nexport default function Card() {\n  return (\n    <div>제목</div>\n    <div>내용</div>\n  );\n}\n```",
+      "④\n```tsx\nexport default function Header() {\n  return (\n    <nav>메뉴</nav>\n    <div>로고</div>\n  );\n}\n```"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 출제 의도: ②가 정답. JSX는 반드시 하나의 루트 요소만 반환해야 한다. <></>(Fragment)는 DOM에 추가 요소 없이 여러 자식을 감쌀 수 있는 유효한 루트 역할을 한다. ①③④는 모두 루트 요소가 2개여서 에러가 발생한다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 2: React 핵심 개념",
+    "title": "useState — 상태를 사용하는 이유",
+    "content": "🎯 검증 목표 — useState로 상태를 만드는 이유를 이해하는가\nReact에서 useState를 사용하는 이유로 가장 올바른 것은?\n",
+    "points": 2,
+    "options": [
+      "① 값이 바뀔 때 화면을 자동으로 다시 렌더링하고, 리렌더링 사이에도 값을 유지하기 위해서이다",
+      "② 서버에서 데이터를 가져오기 위해서이다",
+      "③ 컴포넌트 간에 데이터를 공유하기 위해서이다",
+      "④ 함수가 실행될 때마다 새로운 값으로 초기화하기 위해서이다"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: ①이 정답. useState의 핵심 역할은 두 가지다. 첫째, 상태가 바뀌면 React가 자동으로 리렌더링하여 UI를 최신 상태로 업데이트한다. 둘째, 일반 변수와 달리 리렌더링 사이에도 값이 초기화되지 않고 유지된다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 2: React 핵심 개념",
+    "title": "useEffect — 의존성 배열 3패턴",
+    "content": "🎯 검증 목표 — useEffect의 의존성 배열 형태에 따른 실행 시점 3가지를 정확히 구분하는가\n아래 세 가지 useEffect 패턴 (A), (B), (C)의 실행 시점으로 가장 올바르게 짝지어진 것은?\n```tsx\n// (A)\nuseEffect(() => {\n  console.log('실행');\n});\n\n// (B)\nuseEffect(() => {\n  console.log('실행');\n}, []);\n\n// (C)\nuseEffect(() => {\n  console.log('실행');\n}, [keyword]);\n```\n",
+    "points": 2,
+    "options": [
+      "① (A) 마운트 1회만 / (B) 매 렌더링마다 / (C) keyword가 변경될 때마다",
+      "② (A) 매 렌더링마다 / (B) 마운트 1회만 / (C) keyword가 변경될 때마다",
+      "③ (A) 매 렌더링마다 / (B) keyword가 변경될 때마다 / (C) 마운트 1회만",
+      "④ (A) 마운트 1회만 / (B) keyword가 변경될 때마다 / (C) 매 렌더링마다"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 출제 의도: ①과 ②를 혼동하는 경우가 많다. 의존성 배열이 아예 없으면 매 렌더링마다 실행, 빈 배열 []이면 마운트 1회만 실행, 값이 있으면 해당 값이 변경될 때마다 실행.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 2: React 핵심 개념",
+    "title": "Props — 단방향 데이터 흐름",
+    "content": "🎯 검증 목표 — Props가 부모→자식 방향으로만 흐른다는 원칙과, 자식이 부모 상태를 변경하려면 콜백 함수를 내려줘야 한다는 패턴을 이해하는가\n아래 코드에서 SearchBar 컴포넌트가 입력한 키워드를 부모인 ProductPage에 전달하려고 한다.\n빈칸 (A) 와 (B) 에 들어갈 내용으로 가장 올바른 것은?\n```tsx\n// 부모 컴포넌트\nfunction ProductPage() {\n  const [keyword, setKeyword] = useState('');\n\n  return (\n    <div>\n      <SearchBar  (A)  />\n      <p>검색어: {keyword}</p>\n    </div>\n  );\n}\n\n// 자식 컴포넌트\nfunction SearchBar({  (B)  }) {\n  return (\n    <input\n      onChange={(e) => onSearch(e.target.value)}\n      placeholder=\"검색어 입력\"\n    />\n  );\n}\n```\n",
+    "points": 2,
+    "options": [
+      "① (A) keyword={keyword}  /  (B) keyword",
+      "② (A) onSearch={setKeyword}  /  (B) onSearch",
+      "③ (A) setKeyword={setKeyword}  /  (B) keyword",
+      "④ (A) onChange={setKeyword}  /  (B) onChange"
+    ],
+    "correctAnswer": "②",
+    "explanation": "💡 출제 의도: 자식은 부모의 state를 직접 수정할 수 없다. 부모가 상태 변경 함수를 props로 내려주고, 자식이 그것을 호출하는 패턴이 핵심이다. props 이름은 자유롭게 정할 수 있으나 의미 있는 이름(onSearch)이 관례.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 2: React 핵심 개념",
+    "title": "Unmount 시 state 소멸",
+    "content": "React SPA 앱에서 /checkout 페이지에서 배송지 주소를 입력하던 중\n실수로 / (홈)으로 이동했다가 다시 /checkout으로 돌아왔을 때 입력한 내용이 모두 사라졌다.\n이렇게 된 이유로 가장 올바른 것은?\n",
+    "points": 2,
+    "options": [
+      "① 페이지를 이동하면 /checkout 컴포넌트가 Unmount되어 useState 값도 함께 사라지기 때문이다",
+      "② 브라우저가 자동으로 폼 데이터를 삭제하기 때문이다",
+      "③ Next.js가 페이지 이동 시 모든 localStorage를 초기화하기 때문이다",
+      "④ useEffect를 사용하지 않아서 데이터가 저장되지 않기 때문이다"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: 페이지를 이동하면 이전 컴포넌트는 Unmount(DOM에서 제거)된다. Unmount 시 해당 컴포넌트의 useState 값도 함께 소멸된다. 다시 돌아오면 컴포넌트가 새로 Mount(생성)되므로 state는 초기값으로 시작한다.\n",
+    "type": "MULTIPLE_CHOICE"
+  },
+  {
+    "category": "중간평가 — 영역 2: React 핵심 개념",
+    "title": "Prisma 조회 메서드 선택",
+    "content": "로그인 처리 시 이메일로 사용자를 조회하는 코드이다.\n빈칸(______)에 들어갈 Prisma 메서드로 올바른 것은?\n```ts\nconst user = await prisma.user.______({\n  where: { email: formData.email },\n});\n\nif (!user) {\n  return { error: '존재하지 않는 사용자입니다' };\n}\n```\n",
+    "points": 2,
+    "options": [
+      "① findUnique",
+      "② findFirst",
+      "③ findMany",
+      "④ findAll"
+    ],
+    "correctAnswer": "①",
+    "explanation": "💡 출제 의도: findUnique는 @unique 또는 @id 필드로 단일 레코드를 조회할 때 사용한다. 결과가 없으면 null을 반환한다. findFirst는 조건에 맞는 첫 번째 레코드, findMany는 조건에 맞는 여러 레코드를 배열로 반환한다. findAll은 Prisma에 존재하지 않는 메서드이다.\n",
+    "type": "MULTIPLE_CHOICE"
+  }
+]
