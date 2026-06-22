@@ -103,9 +103,6 @@ importers:
       zod:
         specifier: 4.4.3
         version: 4.4.3
-      zustand:
-        specifier: 5.0.14
-        version: 5.0.14(@types/react@19.1.17)(react@19.1.0)(use-sync-external-store@1.6.0(react@19.1.0))
     devDependencies:
       '@types/react':
         specifier: ~19.1.0
@@ -11975,12 +11972,6 @@ snapshots:
   zod@4.4.1: {}
 
   zod@4.4.3: {}
-
-  zustand@5.0.14(@types/react@19.1.17)(react@19.1.0)(use-sync-external-store@1.6.0(react@19.1.0)):
-    optionalDependencies:
-      '@types/react': 19.1.17
-      react: 19.1.0
-      use-sync-external-store: 1.6.0(react@19.1.0)
 
   zustand@5.0.14(@types/react@19.2.15)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4)):
     optionalDependencies:
