@@ -10,6 +10,9 @@ export default function ProductDetailScreen() {
   const router = useRouter();
   const [added, setAdded] = useState(false);
 
+  // useQuery로 제품 상세 정보 가져오기 (캐싱 및 로딩 상태 관리)
+  // 실제 API에서는 /api/products/:id 엔드포인트를 만들어서 해당 제품 정보만 가져오는 것이 좋습니다.
+  // 여기서는 간단히 전체 제품을 가져와서 id로 필터링하는 방식으로 구현했습니다.
   const { data } = useQuery({
     queryKey: ["products", id],
     queryFn: async () => {

@@ -2,15 +2,8 @@
 
 ## 8. STEP 7 — 실기기 테스트
 
-```bash
-# 📍 위치: C:\project\shop-monorepo-mobile (루트)
-pnpm dev
-```
-
-```bash
-# 📍 위치: C:\project\shop-monorepo-mobile (루트, 다른 터미널)
-pnpm --filter mobile start
-```
+탭 1(web)·탭 2(mobile) 두 서버가 모두 켜져 있는지 다시 확인한다 — 1번 섹션의
+"개발 서버 두 개 띄우기" 참고.
 
 체크리스트:
 
