@@ -10,6 +10,7 @@
  * 검증 통과 후 다음 단계(Prisma 데이터 점진 적용)는 이 파일을 기준으로 진행한다.
  */
 import Link from 'next/link';
+import { Share2, Camera, PlayCircle } from 'lucide-react';
 
 const CATEGORIES = ['패션의류', '신발/가방', '액세서리', '뷰티', '스포츠'];
 
@@ -201,6 +202,61 @@ export default function MainRedesignPreviewPage() {
           </form>
         </div>
       </section>
+
+      {/* 8. Footer */}
+      <footer className="max-w-[1280px] mx-auto px-4 md:px-10">
+        <div className="flex flex-col md:flex-row gap-10 md:gap-6 items-start md:items-end justify-center py-12 md:py-20">
+          <div className="flex-1 min-w-0 flex flex-col gap-6">
+            <p className="font-dm-display font-bold text-lg text-dm-primary tracking-wide">THE EDIT</p>
+            <p className="font-dm-body text-base text-dm-on-surface-variant max-w-[320px] leading-[1.6]">
+              A curated editorial platform for the modern woman. Bringing the best of
+              Seoul&apos;s fashion and beauty to the global stage.
+            </p>
+          </div>
+          <div className="flex-1 min-w-0 flex flex-col gap-6">
+            <p className="font-dm-body text-xs font-bold tracking-[0.08em] text-dm-primary">SHOP</p>
+            <ul className="flex flex-col gap-4 font-dm-body text-base text-dm-on-surface-variant">
+              <li>New Arrivals</li>
+              <li>Best Sellers</li>
+              <li>Clothing</li>
+              <li>Beauty</li>
+            </ul>
+          </div>
+          <div className="flex-1 min-w-0 flex flex-col gap-6">
+            <p className="font-dm-body text-xs font-bold tracking-[0.08em] text-dm-primary">SUPPORT</p>
+            <ul className="flex flex-col gap-4 font-dm-body text-base text-dm-on-surface-variant">
+              <li>Shipping Info</li>
+              <li>Returns &amp; Exchanges</li>
+              <li>Contact Us</li>
+              <li>FAQ</li>
+            </ul>
+          </div>
+          <div className="flex-1 min-w-0 flex flex-col gap-6">
+            <p className="font-dm-body text-xs font-bold tracking-[0.08em] text-dm-primary">SOCIAL</p>
+            <div className="flex gap-4">
+              <span className="size-10 rounded-dm-full bg-dm-surface flex items-center justify-center">
+                <Share2 className="size-[18px]" strokeWidth={1.5} />
+              </span>
+              <span className="size-10 rounded-dm-full bg-dm-surface flex items-center justify-center">
+                <Camera className="size-[18px]" strokeWidth={1.5} />
+              </span>
+              <span className="size-10 rounded-dm-full bg-dm-surface flex items-center justify-center">
+                <PlayCircle className="size-[18px]" strokeWidth={1.5} />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-dm-outline-variant/30 py-[33px] flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <p className="font-dm-body text-[11px] text-dm-on-surface-variant">
+            © 2024 THE EDIT. All rights reserved. High-end editorial e-commerce.
+          </p>
+          <div className="flex gap-6 font-dm-body text-[11px] text-dm-on-surface-variant">
+            <span>Terms of Service</span>
+            <span>Privacy Policy</span>
+            <span>Accessibility</span>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );
