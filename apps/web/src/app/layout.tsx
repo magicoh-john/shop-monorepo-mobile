@@ -21,6 +21,7 @@ const manrope = Manrope({
 const libreCaslonText = Libre_Caslon_Text({
   variable: "--font-libre-caslon-text",
   weight: "400",
+  style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
