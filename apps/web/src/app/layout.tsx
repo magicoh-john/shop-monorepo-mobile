@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Manrope, Libre_Caslon_Text } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/layout/Providers";
 
@@ -10,6 +10,17 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+});
+
+const libreCaslonText = Libre_Caslon_Text({
+  variable: "--font-libre-caslon-text",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -53,7 +64,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} ${libreCaslonText.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>

@@ -1,4 +1,40 @@
 @import "tailwindcss";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+/*
+ * Serene Editorial 디자인 시스템 토큰 (docs/design/DESIGN.md)
+ * 메인 페이지 리디자인 전용 — 기존 shadcn 토큰(--color-*)과 충돌 방지를 위해 dm- 접두사 사용.
+ */
+@theme {
+  --color-dm-surface: #fbf9f8;
+  --color-dm-surface-dim: #dbd9d9;
+  --color-dm-surface-bright: #fbf9f8;
+  --color-dm-surface-container-lowest: #ffffff;
+  --color-dm-surface-container-low: #f5f3f3;
+  --color-dm-surface-container: #efeded;
+  --color-dm-surface-container-high: #eae8e7;
+  --color-dm-surface-container-highest: #e4e2e2;
+  --color-dm-on-surface: #1b1c1c;
+  --color-dm-on-surface-variant: #434843;
+  --color-dm-outline: #737973;
+  --color-dm-outline-variant: #c3c8c1;
+  --color-dm-primary: #061b0e;
+  --color-dm-on-primary: #ffffff;
+  --color-dm-primary-container: #1b3022;
+  --color-dm-on-primary-container: #819986;
+  --color-dm-secondary: #9f402d;
+  --color-dm-on-secondary: #ffffff;
+  --color-dm-secondary-container: #fd876f;
+
+  --font-dm-display: var(--font-libre-caslon-text), serif;
+  --font-dm-body: var(--font-manrope), sans-serif;
+  --font-dm-ko: "Pretendard", var(--font-manrope), sans-serif;
+
+  --radius-dm-sm: 0.25rem;
+  --radius-dm-md: 0.75rem;
+  --radius-dm-lg: 1rem;
+  --radius-dm-full: 9999px;
+}
 
 @theme {
   --color-background: hsl(0 0% 100%);
