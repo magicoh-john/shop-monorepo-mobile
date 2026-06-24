@@ -14,17 +14,17 @@ import Link from 'next/link';
 const CATEGORIES = ['패션의류', '신발/가방', '액세서리', '뷰티', '스포츠'];
 
 const NEW_ARRIVALS = [
-  { id: 'n1', brand: 'LÉMUELL', name: 'Structured Wool Blazer', price: '$345.00' },
-  { id: 'n2', brand: 'MINSÉ', name: 'Pure Cashmere Scarf', price: '$120.00' },
-  { id: 'n3', brand: 'OEUVE', name: 'Mini Moon Leather Bag', price: '$280.00' },
-  { id: 'n4', brand: 'RECTO', name: 'Square Toe Ankle Boots', price: '$410.00' },
+  { id: 'n1', brand: 'LÉMUELL', name: 'Structured Wool Blazer', price: '$345.00', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=600&fit=crop&auto=format' },
+  { id: 'n2', brand: 'MINSÉ', name: 'Pure Cashmere Scarf', price: '$120.00', image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&h=600&fit=crop&auto=format' },
+  { id: 'n3', brand: 'OEUVE', name: 'Mini Moon Leather Bag', price: '$280.00', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=600&h=600&fit=crop&auto=format' },
+  { id: 'n4', brand: 'RECTO', name: 'Square Toe Ankle Boots', price: '$410.00', image: 'https://images.unsplash.com/photo-1605812860427-4024433a70fd?w=600&h=600&fit=crop&auto=format' },
 ];
 
 const BEAUTY_PICKS = [
-  { id: 'b1', category: 'SKINCARE', name: 'Deep Sea Essence', price: '$65.00' },
-  { id: 'b2', category: 'MAKEUP', name: 'Satin Glide Lipstick', price: '$32.00' },
-  { id: 'b3', category: 'MAKEUP', name: 'Glow Cushion Foundation', price: '$48.00' },
-  { id: 'b4', category: 'HAIR CARE', name: 'Midnight Repair Oil', price: '$55.00' },
+  { id: 'b1', category: 'SKINCARE', name: 'Deep Sea Essence', price: '$65.00', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&h=500&fit=crop&auto=format' },
+  { id: 'b2', category: 'MAKEUP', name: 'Satin Glide Lipstick', price: '$32.00', image: 'https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?w=500&h=500&fit=crop&auto=format' },
+  { id: 'b3', category: 'MAKEUP', name: 'Glow Cushion Foundation', price: '$48.00', image: 'https://images.unsplash.com/photo-1631730486572-226d1f595b68?w=500&h=500&fit=crop&auto=format' },
+  { id: 'b4', category: 'HAIR CARE', name: 'Midnight Repair Oil', price: '$55.00', image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&h=500&fit=crop&auto=format' },
 ];
 
 export default function MainRedesignPreviewPage() {
@@ -87,7 +87,9 @@ export default function MainRedesignPreviewPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {NEW_ARRIVALS.map((p) => (
             <div key={p.id} className="group block">
-              <div className="relative aspect-square overflow-hidden rounded-dm-lg bg-dm-surface-container" />
+              <div className="relative aspect-square overflow-hidden rounded-dm-lg bg-dm-surface-container">
+                <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+              </div>
               <div className="mt-3 font-dm-ko">
                 <p className="text-[11px] font-medium text-dm-on-surface-variant uppercase tracking-wide">{p.brand}</p>
                 <p className="text-base font-bold text-dm-on-surface mt-1 line-clamp-1">{p.name}</p>
@@ -162,7 +164,9 @@ export default function MainRedesignPreviewPage() {
         <div className="flex gap-4 overflow-x-auto pb-2">
           {BEAUTY_PICKS.map((p) => (
             <div key={p.id} className="shrink-0 w-[260px] md:w-[320px]">
-              <div className="aspect-square rounded-dm-md overflow-hidden bg-dm-surface-container" />
+              <div className="aspect-square rounded-dm-md overflow-hidden bg-dm-surface-container">
+                <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+              </div>
               <div className="mt-3 font-dm-ko">
                 <p className="text-[11px] font-medium text-dm-secondary uppercase tracking-wide">{p.category}</p>
                 <p className="text-base font-bold text-dm-on-surface mt-1 line-clamp-1">{p.name}</p>
