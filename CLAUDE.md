@@ -7,6 +7,18 @@
 
 ---
 
+## 🎨 디자인 작업 시 필수 참조 순서
+
+UI/페이지 구현 작업 전 AI는 반드시 아래 순서로 확인한다.
+
+1. `docs/design/DESIGN.md` 먼저 읽기 — 색상/타이포그래피/spacing/컴포넌트 토큰의 단일 기준(디자인 헌법)
+2. 해당 페이지의 `docs/design/pages/<page>.md` 읽기 — 섹션 구성, 레이아웃, 사용 컴포넌트 명세
+3. Figma 원본 raw 값(hex, px)보다 `DESIGN.md` 토큰을 항상 우선한다 — Figma는 레이아웃 참고용 초안이며 토큰 매핑이 기준
+4. **hex 값/임의 px 직접 사용 금지** — 항상 `{colors.*}`, `{typography.*}`, `{spacing.*}`, `{rounded.*}` 토큰 참조로 구현
+5. 새 페이지 명세 작성 시 `docs/design/page-template.md` 구조를 따른다
+
+---
+
 # CLAUDE.md — 쇼핑몰 앱 (Shopping Mall)
 
 이 파일은 이 프로젝트에 특화된 내용만 기술한다.
