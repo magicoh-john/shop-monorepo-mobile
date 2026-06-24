@@ -15,16 +15,16 @@ import { Share2, Camera, PlayCircle } from 'lucide-react';
 const CATEGORIES = ['패션의류', '신발/가방', '액세서리', '뷰티', '스포츠'];
 
 const NEW_ARRIVALS = [
-  { id: 'n1', brand: 'LÉMUELL', name: 'Structured Wool Blazer', price: '$345.00', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=600&fit=crop&auto=format' },
+  { id: 'n1', brand: 'LÉMUELL', name: 'Structured Wool Blazer', price: '$345.00', image: 'https://images.unsplash.com/photo-1551232864-3f0890e580d6?w=600&h=600&fit=crop&auto=format' },
   { id: 'n2', brand: 'MINSÉ', name: 'Pure Cashmere Scarf', price: '$120.00', image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&h=600&fit=crop&auto=format' },
-  { id: 'n3', brand: 'OEUVE', name: 'Mini Moon Leather Bag', price: '$280.00', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=600&h=600&fit=crop&auto=format' },
+  { id: 'n3', brand: 'OEUVE', name: 'Mini Moon Leather Bag', price: '$280.00', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&h=600&fit=crop&auto=format' },
   { id: 'n4', brand: 'RECTO', name: 'Square Toe Ankle Boots', price: '$410.00', image: 'https://images.unsplash.com/photo-1605812860427-4024433a70fd?w=600&h=600&fit=crop&auto=format' },
 ];
 
 const BEAUTY_PICKS = [
-  { id: 'b1', category: 'SKINCARE', name: 'Deep Sea Essence', price: '$65.00', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&h=500&fit=crop&auto=format' },
-  { id: 'b2', category: 'MAKEUP', name: 'Satin Glide Lipstick', price: '$32.00', image: 'https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?w=500&h=500&fit=crop&auto=format' },
-  { id: 'b3', category: 'MAKEUP', name: 'Glow Cushion Foundation', price: '$48.00', image: 'https://images.unsplash.com/photo-1631730486572-226d1f595b68?w=500&h=500&fit=crop&auto=format' },
+  { id: 'b1', category: 'SKINCARE', name: 'Deep Sea Essence', price: '$65.00', image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=500&h=500&fit=crop&auto=format' },
+  { id: 'b2', category: 'MAKEUP', name: 'Satin Glide Lipstick', price: '$32.00', image: 'https://images.unsplash.com/photo-1599733589046-833caa45df96?w=500&h=500&fit=crop&auto=format' },
+  { id: 'b3', category: 'MAKEUP', name: 'Glow Cushion Foundation', price: '$48.00', image: 'https://images.unsplash.com/photo-1599733589046-833caa45df96?w=500&h=500&fit=crop&auto=format' },
   { id: 'b4', category: 'HAIR CARE', name: 'Midnight Repair Oil', price: '$55.00', image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&h=500&fit=crop&auto=format' },
 ];
 
@@ -35,11 +35,11 @@ export default function MainRedesignPreviewPage() {
       {/* 2. Hero Banner */}
       <section className="relative w-full min-h-[640px] flex items-center justify-center overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1600&h=1200&fit=crop&auto=format"
+          src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&h=1200&fit=crop&auto=format"
           alt="AW 2024 Collection"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/5" />
+        <div className="absolute inset-0 bg-white/10" />
         <div className="relative z-10 max-w-[672px] mx-auto px-6 text-center">
           <p className="font-dm-body text-xs font-bold tracking-[0.08em] uppercase text-dm-primary">
             AW 2024 COLLECTION
