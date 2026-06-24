@@ -1,245 +1,191 @@
 /**
  * [Server Component] 쇼핑몰 메인 홈 페이지
  *
- * docs/design/pages/main.md(Figma node 1:3 실제 콘텐츠 기준 명세) + docs/design/DESIGN.md
- * (Serene Editorial 디자인 토큰)를 기준으로 구현한 화면이다. GNB는 (shop)/layout.tsx의
- * Header가 담당하므로 이 파일은 Hero Banner / Category Tab / New Arrivals / Brand Spotlight /
- * The Beauty Ritual / Join The Circle 6개 섹션을 구현한다.
- *
- * 콘텐츠 출처: Hero·Brand Spotlight·The Beauty Ritual 타이틀·Join The Circle은 Figma 원문
- * (영문)을 그대로 사용한다 — DB에 대응하는 데이터가 없는 정적 콘텐츠다.
- * New Arrivals·The Beauty Ritual 상품 목록은 기존 Prisma 쿼리(newProducts, bestProducts)를
- * 재사용한다 — 완벽한 의미적 매칭(뷰티 전용 쿼리 등)은 요구하지 않는다.
+ * API 호출 없이 Prisma로 DB를 직접 조회한 뒤 완성된 HTML을 브라우저에 전송한다.
+ * - 대카테고리 목록, 신상품(최신 8개), 베스트상품(재고 적은 순 8개)을 병렬 조회
+ * - BannerSlider · ProductGrid 는 상호작용이 필요한 Client Component로 분리
  */
 import Link from 'next/link';
 import { prisma } from '@my-project/database';
+import BannerSlider from '@/features/products/components/BannerSlider';
 import ProductImage from '@/features/products/components/ProductImage';
 import RecentProducts from '@/features/products/components/RecentProducts';
 import ProductGrid from '@/features/products/components/ProductGrid';
 import type { Product } from '@my-project/types';
 
-/** [Server Component] 상품 카드 — New Arrivals 섹션 전용 (이미지 rounded.lg = 16px, Figma 실측값) */
+/**
+ * [Server Component] 상품 카드
+ *
+ * HomePage 안에서만 사용되는 파일-로컬 컴포넌트.
+ * 외부로 export하지 않으므로 이 파일 외부에서는 호출할 수 없다.
+ *
+ * 호출 위치: HomePage의 신상품·베스트상품 섹션
+ *   {newProducts.map((p) => <ProductCard key={p.id} product={p as any} />)}
+ *   {bestProducts.map((p) => <ProductCard key={p.id} product={p as any} />)}
+ *
+ * 역할: 상품 한 개를 카드 형태로 렌더링하고, 클릭 시 상품 상세 페이지로 이동시킨다.
+ *
+ * Props:
+ *   product: Product — 상품 데이터 객체 (@my-project/types의 Product 타입)
+ *     - id        : 상세 페이지 링크(/products/:id) 생성에 사용
+ *     - imageUrl  : 상품 이미지 URL (ProductImage 컴포넌트에 전달)
+ *     - name      : 상품명
+ *     - price     : 가격 (숫자, toLocaleString()으로 천 단위 포맷)
+ *     - stock     : 재고 수량
+ *     - category  : 카테고리 객체 (nullable — name 표시에 사용)
+ */
 function ProductCard({ product }: { product: Product }) {
   return (
-    <Link href={`/products/${product.id}`} className="group block">
-      <div className="relative aspect-square overflow-hidden rounded-dm-lg bg-dm-surface-container">
+    <Link
+      href={`/products/${product.id}`}
+      className="rounded-[calc(var(--radius)-2px)] border border-border overflow-hidden hover:shadow-md transition-shadow bg-background"
+    >
+      <div className="aspect-square overflow-hidden">
         <ProductImage src={product.imageUrl} alt={product.name} />
-        <button
-          type="button"
-          aria-label="위시리스트에 추가"
-          className="absolute top-3 right-3 size-10 rounded-dm-full bg-white/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="size-4 text-dm-on-surface">
-            <path d="M12 21s-7.5-4.6-10-9.1C.5 8.7 2 5 5.5 5 8 5 10 6.8 12 9c2-2.2 4-4 6.5-4C22 5 23.5 8.7 22 11.9 19.5 16.4 12 21 12 21z" />
-          </svg>
-        </button>
       </div>
-      <div className="mt-3 font-dm-ko">
+      <div className="p-3">
         {product.category && (
-          <p className="text-[11px] font-medium text-dm-on-surface-variant uppercase tracking-wide">{product.category.name}</p>
+          <p className="text-xs text-muted-foreground">{product.category.name}</p>
         )}
-        <p className="text-base font-bold text-dm-on-surface mt-1 line-clamp-1">{product.name}</p>
-        <p className="text-base text-dm-on-surface mt-0.5">{product.price.toLocaleString()}원</p>
+        <p className="text-sm text-foreground font-medium mt-0.5 line-clamp-2">{product.name}</p>
+        <p className="text-sm font-bold text-foreground mt-1">{product.price.toLocaleString()}원</p>
+        <p className="text-xs text-muted-foreground mt-0.5">재고 {product.stock}개</p>
       </div>
     </Link>
   );
 }
 
+/**
+ * [Server Component] 쇼핑몰 메인 홈 페이지 컴포넌트
+ *
+ * async를 붙인 이유:
+ *   서버에서 직접 DB를 조회(await prisma...)해야 하기 때문이다.
+ *   Server Component는 async 함수로 선언할 수 있으며,
+ *   await로 데이터를 받아온 뒤 완성된 HTML을 클라이언트에 전송한다.
+ *   클라이언트에서 별도 API 요청 없이 초기 렌더링 시 데이터가 이미 포함된다.
+ *
+ * export default의 의미:
+ *   Next.js App Router는 각 page.tsx의 default export를 해당 URL의 페이지로 인식한다.
+ *   이 함수는 '/' 경로(루트)로 접속했을 때 Next.js가 자동으로 호출한다.
+ *   개발자가 직접 import해서 사용하는 것이 아니라, Next.js 프레임워크가 라우팅 규칙에 따라 호출한다.
+ */
 export default async function HomePage() {
+  // Promise.all: 세 쿼리를 순차 실행이 아닌 동시에 실행해 응답 시간을 단축한다.
+  // 구조 분해로 결과를 순서대로 각 변수에 바인딩한다.
   const [categories, newProducts, bestProducts] = await Promise.all([
+
+    // findMany(): 조건에 맞는 여러 행을 배열로 반환하는 Prisma 메서드
+    // ─ 대카테고리: parentId가 null인 최상위 카테고리만 조회, sortOrder 오름차순 정렬
     prisma.category.findMany({
-      where: { parentId: null },
-      orderBy: { sortOrder: 'asc' },
+      where: { parentId: null },   // 최상위 카테고리만 (소카테고리 제외)
+      orderBy: { sortOrder: 'asc' }, // 지정된 정렬 순서대로 표시
     }),
+
+    // ─ 신상품: 가장 최근에 등록된 상품 8개 (createdAt 내림차순)
     prisma.product.findMany({
-      take: 4,
-      orderBy: { createdAt: 'desc' },
-      include: { category: true },
+      take: 8,                        // 상위 8개만 가져옴 (SQL LIMIT 8)
+      orderBy: { createdAt: 'desc' }, // 최신 등록순
+      include: { category: true },    // category 관계 테이블을 JOIN해서 함께 조회
     }),
+
+    // ─ 베스트상품: 재고가 적은 순 8개 (많이 팔렸을수록 재고가 적다는 가정)
+    //   실제 주문 집계 데이터가 없어 재고 수량을 판매 인기의 대리 지표로 사용
     prisma.product.findMany({
-      take: 4,
-      orderBy: { stock: 'asc' },
-      include: { category: true },
+      take: 8,                      // 상위 8개만
+      orderBy: { stock: 'asc' },   // 재고 적은 순 (오름차순)
+      include: { category: true },  // category 관계 테이블 JOIN
     }),
   ]);
 
   return (
-    <div className="bg-dm-surface min-h-full font-dm-body">
+    <div className="bg-muted min-h-full">
 
-      {/* 2. Hero Banner */}
-      <section className="relative w-full min-h-[640px] flex items-center justify-center overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1600&h=1200&fit=crop&auto=format"
-          alt="AW 2024 Collection"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/5" />
-        <div className="relative z-10 max-w-[672px] mx-auto px-6 text-center">
-          <p className="font-dm-body text-xs font-bold tracking-[0.08em] uppercase text-dm-primary">
-            AW 2024 COLLECTION
-          </p>
-          <h1 className="font-dm-display text-[28px] md:text-5xl leading-[1.2] mt-4 text-dm-primary">
-            <em className="italic">The New Silence:</em><br />Refined Winter Minimalism
-          </h1>
-          <Link
-            href="/products"
-            className="inline-block mt-8 px-10 py-4 rounded-dm-full bg-dm-primary text-dm-on-primary font-dm-body text-xs font-bold tracking-[0.08em] uppercase hover:opacity-90 transition-opacity"
-          >
-            DISCOVER THE EDIT
-          </Link>
-        </div>
+      {/* 배너 슬라이더 */}
+      <section className="w-full">
+        <BannerSlider />
       </section>
 
-      {/* 3. Category Tab (Horizontal Scroll) */}
-      <section className="border-b border-dm-outline-variant">
-        <div className="max-w-[1280px] mx-auto px-4 md:px-10 overflow-x-auto">
-          <div className="flex gap-8 py-6 min-w-max">
+      {/* 퀵 카테고리 — DB 대카테고리 기반 */}
+      <section className="max-w-5xl mx-auto px-6 py-6">
+        <div className="bg-card rounded-[var(--radius)] border border-border px-6 py-5">
+          <div className="flex items-center justify-around">
             {categories.map((cat) => (
               <Link
                 key={cat.id}
                 href={`/categories/${cat.slug}`}
-                className="font-dm-ko text-xs font-bold tracking-[0.04em] text-dm-on-surface-variant hover:text-dm-on-surface whitespace-nowrap pb-1 border-b-2 border-transparent hover:border-dm-on-surface transition-colors"
+                className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
               >
-                {cat.name}
+                <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center text-3xl">
+                  {cat.emoji}
+                </div>
+                <span className="text-xs text-foreground text-center leading-tight">{cat.name}</span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. New Arrivals */}
-      <section className="max-w-[1280px] mx-auto px-4 md:px-10 py-12 md:py-20">
-        <div className="flex items-end justify-between mb-8 flex-wrap gap-2">
-          <div>
-            <h2 className="font-dm-display text-2xl md:text-[32px] text-dm-primary">New Arrivals</h2>
-            <p className="font-dm-body text-sm md:text-base text-dm-on-surface-variant mt-1">
-              Discover the latest pieces from Seoul&apos;s top designers.
-            </p>
-          </div>
-          <Link href="/products?sort=new" className="font-dm-body text-xs font-bold tracking-[0.08em] uppercase underline text-dm-on-surface">
-            VIEW ALL
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {newProducts.map((p) => <ProductCard key={p.id} product={p as any} />)}
-        </div>
-      </section>
-
       {/* 개인 추천상품 — 최근 본 상품 (없으면 숨김) */}
       <RecentProducts />
 
-      {/* 5. Brand Spotlight (Asymmetric) */}
-      <section className="bg-dm-surface-container-low max-w-[1280px] mx-auto px-4 md:px-10 py-12 md:py-20 my-4 rounded-dm-lg">
-        <div className="grid md:grid-cols-12 gap-8 items-stretch">
-          <div className="md:col-span-7">
-            <div className="aspect-[4/3] md:aspect-auto md:h-full rounded-dm-xl overflow-hidden bg-dm-surface-container-high">
-              <img
-                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&h=900&fit=crop&auto=format"
-                alt="Designer of the month"
-                className="w-full h-full object-cover"
-              />
+      {/* 신상품 */}
+      <section className="max-w-5xl mx-auto px-6 pb-6">
+        <div className="bg-card rounded-[var(--radius)] border border-border overflow-hidden">
+          <div className="h-1 bg-gradient-to-r from-primary to-blue-400" />
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-lg font-bold text-foreground">신상품</h2>
+                <p className="text-xs text-muted-foreground mt-0.5">새로 들어온 상품</p>
+              </div>
+              <Link href="/products?sort=new" className="text-sm text-primary hover:opacity-80 font-medium">
+                전체보기 →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {newProducts.map((p) => <ProductCard key={p.id} product={p as any} />)}
             </div>
           </div>
-          <div className="md:col-span-5 flex flex-col">
-            <p className="font-dm-body text-xs font-bold tracking-[0.08em] uppercase text-dm-secondary">
-              DESIGNER OF THE MONTH
-            </p>
-            <h2 className="font-dm-display text-[28px] md:text-[32px] text-dm-primary mt-3">
-              Maison De Sèoul:<br />Quiet Elegance
-            </h2>
-            <p className="font-dm-body text-sm md:text-base text-dm-on-surface-variant mt-4 leading-relaxed">
-              Founded in the heart of Hannam-dong, Maison De Sèoul redefines contemporary luxury
-              through a lens of extreme minimalism. Every stitch is intentional, every fabric is
-              sourced for its sensory experience. This season explores the dialogue between rigid
-              architecture and the fluid human form.
-            </p>
-            <div className="grid grid-cols-2 gap-4 mt-6">
-              <div className="aspect-square rounded-dm-lg overflow-hidden bg-dm-surface-container-high">
-                <img
-                  src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=600&fit=crop&auto=format"
-                  alt="텍스처 디테일"
-                  className="w-full h-full object-cover"
-                />
+        </div>
+      </section>
+
+      {/* 베스트상품 */}
+      <section className="max-w-5xl mx-auto px-6 pb-6">
+        <div className="bg-card rounded-[var(--radius)] border border-border overflow-hidden">
+          <div className="h-1 bg-gradient-to-r from-destructive to-orange-400" />
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-lg font-bold text-foreground">베스트상품</h2>
+                <p className="text-xs text-muted-foreground mt-0.5">가장 많이 팔린 상품</p>
               </div>
-              <div className="aspect-square rounded-dm-lg overflow-hidden bg-dm-surface-container-high">
-                <img
-                  src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&h=600&fit=crop&auto=format"
-                  alt="텍스처 디테일"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <Link href="/products?sort=best" className="text-sm text-primary hover:opacity-80 font-medium">
+                전체보기 →
+              </Link>
             </div>
-            <Link href="/products" className="inline-flex items-center gap-2 mt-6 font-dm-body text-xs font-bold tracking-[0.08em] uppercase text-dm-primary">
-              EXPLORE THE COLLECTION <span aria-hidden>→</span>
-            </Link>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {bestProducts.map((p) => <ProductCard key={p.id} product={p as any} />)}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 6. The Beauty Ritual */}
-      <section className="max-w-[1280px] mx-auto px-4 md:px-10 py-12 md:py-20">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="font-dm-display italic text-2xl md:text-[32px] text-dm-primary">The Beauty Ritual</h2>
-          <div className="hidden md:flex gap-3">
-            <button type="button" aria-label="이전" className="size-12 rounded-dm-full border border-dm-outline flex items-center justify-center hover:bg-dm-surface-container-low transition-colors">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="size-4"><path d="M15 18l-6-6 6-6" /></svg>
-            </button>
-            <button type="button" aria-label="다음" className="size-12 rounded-dm-full border border-dm-outline flex items-center justify-center hover:bg-dm-surface-container-low transition-colors">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="size-4"><path d="M9 18l6-6-6-6" /></svg>
-            </button>
+      {/* 전체상품 — 무한 스크롤 */}
+      <section className="max-w-5xl mx-auto px-6 pb-10">
+        <div className="bg-card rounded-[var(--radius)] border border-border overflow-hidden">
+          <div className="h-1 bg-gradient-to-r from-muted-foreground to-slate-400" />
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-lg font-bold text-foreground">전체상품</h2>
+                <p className="text-xs text-muted-foreground mt-0.5">스크롤하면 더 보입니다</p>
+              </div>
+              <Link href="/products" className="text-sm text-primary hover:opacity-80 font-medium">
+                상품 페이지 →
+              </Link>
+            </div>
+            <ProductGrid />
           </div>
-        </div>
-        <div className="flex gap-4 overflow-x-auto pb-2">
-          {bestProducts.map((p) => (
-            <Link key={p.id} href={`/products/${p.id}`} className="shrink-0 w-[260px] md:w-[320px]">
-              <div className="aspect-square rounded-dm-md overflow-hidden bg-dm-surface-container">
-                <ProductImage src={p.imageUrl} alt={p.name} />
-              </div>
-              <div className="mt-3 font-dm-ko">
-                {p.category && (
-                  <p className="text-[11px] font-medium text-dm-secondary uppercase tracking-wide">{p.category.name}</p>
-                )}
-                <p className="text-base font-bold text-dm-on-surface mt-1 line-clamp-1">{p.name}</p>
-                <p className="text-base text-dm-on-surface-variant mt-0.5">{p.price.toLocaleString()}원</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* 전체상품 — 무한 스크롤 (기존 기능 유지) */}
-      <section className="max-w-[1280px] mx-auto px-4 md:px-10 pb-12 md:pb-20">
-        <div className="flex items-end justify-between mb-8">
-          <h2 className="font-dm-display text-2xl md:text-[32px] text-dm-on-surface">전체상품</h2>
-          <Link href="/products" className="font-dm-body text-xs font-bold tracking-[0.08em] uppercase underline text-dm-on-surface">
-            VIEW ALL
-          </Link>
-        </div>
-        <ProductGrid />
-      </section>
-
-      {/* 7. Join The Circle (Newsletter) */}
-      <section className="bg-dm-primary py-12 md:py-20">
-        <div className="max-w-[448px] mx-auto px-6 text-center">
-          <h2 className="font-dm-display italic text-2xl md:text-[32px] text-dm-on-primary">
-            Join The Circle
-          </h2>
-          <p className="font-dm-body text-sm md:text-base text-dm-on-primary/80 mt-3">
-            Subscribe for early access to new drops and curated styling guides from our editorial team.
-          </p>
-          <form className="mt-6 flex flex-col sm:flex-row gap-2">
-            <input
-              type="email"
-              placeholder="Email address"
-              className="flex-1 rounded-dm-md bg-transparent border border-white/30 px-4 py-3 text-sm text-dm-on-primary placeholder:text-white/40 focus:outline-none focus:border-dm-on-primary"
-            />
-            <button
-              type="submit"
-              className="rounded-dm-md bg-dm-on-primary text-dm-primary px-6 py-3 text-xs font-bold tracking-[0.08em] uppercase hover:opacity-90 transition-opacity"
-            >
-              SUBMIT
-            </button>
-          </form>
         </div>
       </section>
 
