@@ -162,7 +162,10 @@ export default function MainRedesignPreviewPage() {
             </button>
           </div>
         </div>
-        <div className="flex gap-4 overflow-x-auto pb-2">
+        <div
+          className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: 'none' }}
+        >
           {BEAUTY_PICKS.map((p) => (
             <div key={p.id} className="shrink-0 w-[260px] md:w-[320px]">
               <div className="aspect-square rounded-dm-md overflow-hidden bg-dm-surface-container">
