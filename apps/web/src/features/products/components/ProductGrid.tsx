@@ -55,6 +55,22 @@ interface Props {
 export default function ProductGrid({ categorySlug, keyword }: Props) {
   const { ref, inView } = useInView();
 
+  /**
+   * useInfiniteQuery는 스크롤과 무관하게, ProductGrid가 마운트(렌더링)되는 순간
+   * 다른 React 훅들처럼 항상 즉시 실행된다 — "스크롤해야 호출되는 함수"가 아니다.
+   *
+   * 마운트 즉시 일어나는 일:
+   *   1) queryKey(`['products', 'infinite', { categorySlug }]`)로 캐시를 먼저 확인한다.
+   *   2) 캐시가 있고 60초(staleTime) 이내면 → 그 캐시 데이터를 바로 사용 (네트워크 요청 없음).
+   *   3) 캐시가 없거나 stale하면 → 아래 queryFn을 실행해 첫 페이지(pageParam: null)를
+   *      가져오고, 그 결과를 캐시에 저장한다.
+   *   즉 첫 페이지는 스크롤 전에 이미 캐싱/표시된다.
+   *
+   * queryFn은 DB를 직접 조회하지 않는다. fetch('/api/products?...')로
+   * Next.js API Route를 호출하고, 그 API Route(api/products/route.ts)가 서버에서
+   * Prisma로 DB를 조회한 뒤 JSON을 응답한다 — 클라이언트 캐시 확인 → (필요시) API 호출 →
+   * API가 DB 조회, 이렇게 한 단계가 더 있다.
+   */
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: queryKeys.products.infinite({ categorySlug }),
@@ -70,6 +86,12 @@ export default function ProductGrid({ categorySlug, keyword }: Props) {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     });
 
+  /**
+   * 스크롤이 실제로 트리거하는 건 useInfiniteQuery가 아니라, 그것이 반환한
+   * fetchNextPage 함수다: 스크롤 → useInView가 하단 트리거 div의 inView=true 감지
+   * → fetchNextPage() 호출 → 다음 페이지를 가져와 같은 캐시 엔트리(data.pages)에 누적.
+   * useInfiniteQuery 자체는 이 시점에 새로 시작되는 게 아니라 처음부터 계속 존재하던 것이다.
+   */
   useEffect(() => {
     if (inView && hasNextPage) fetchNextPage();
   }, [inView, hasNextPage, fetchNextPage]);

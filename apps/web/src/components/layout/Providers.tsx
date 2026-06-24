@@ -30,12 +30,31 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  // new QueryClient(...)가 바로 브라우저(클라이언트)에 캐싱할 queryKey 맵을 만드는 부분이다.
-  // 이 인스턴스 내부에 QueryCache(queryKey를 직렬화한 문자열을 키로 쓰는 Map)가 들어있고,
-  // 이후 useQuery/useInfiniteQuery가 호출될 때마다 이 맵에서 조회·저장이 이루어진다.
+  // new QueryClient({...}) 호출로 만들어지는 이 객체가 queryKey map과
+  // 서버 쿼리 결과를 저장할 캐시 공간을 관리하는 객체다.
+  //
+  // 이 queryClient 객체 하나가:
+  //   - queryKey → 캐시된 데이터를 매핑하는 저장소(QueryCache) 관리
+  //   - staleTime, retry 같은 기본 옵션 보관
+  //   - (mutation 쓸 경우) MutationCache도 함께 관리
+  // 를 모두 담당하고, QueryClientProvider가 이 객체를 React Context로 트리 전체에
+  // 뿌려서 useQuery/useInfiniteQuery 훅들이 같은 캐시 공간을 공유해서 읽고 쓰게 된다.
+  //
   // useState로 감싸서 한 번만 생성 — 리렌더링 때마다 새 QueryClient(=새 캐시)가 만들어지는 걸 방지한다.
   // (그냥 const로 쓰면 Providers가 리렌더링될 때마다 새 빈 캐시가 생겨 기존 캐싱 결과가 날아간다)
   const [queryClient] = useState(() => new QueryClient({
+    // defaultOptions는 "캐싱/재조회를 켜는" 옵션이 아니다 — 캐싱과 재조회는
+    // defaultOptions 없이도 TanStack Query의 기본 동작으로 항상 일어난다.
+    // 여기서 바꾸는 건 그 동작의 세부 기준값뿐이다.
+    //
+    //   staleTime: 60 * 1000  → 캐시가 "fresh"하다고 간주되는 시간.
+    //     기본값은 0(즉시 stale)인데 60초로 늘려서, 60초 동안은 재요청 없이 캐시를 그대로 쓴다.
+    //   retry: 1              → 쿼리 실패 시 재시도 횟수. 기본값 3에서 1로 줄임.
+    //
+    // refetchOnMount / refetchOnWindowFocus / refetchOnReconnect처럼 "언제 재조회를
+    // 시도하느냐"를 결정하는 옵션은 여기서 설정하지 않았으므로 라이브러리 기본값(모두 true)
+    // 그대로다. 즉 마운트/창 포커스 복귀/재연결 시 재조회를 "시도"는 하지만, staleTime
+    // 60초 이내라면 fresh하다고 판단해 실제 네트워크 요청 없이 캐시를 그대로 사용한다.
     defaultOptions: {
       queries: {
         staleTime: 60 * 1000,
