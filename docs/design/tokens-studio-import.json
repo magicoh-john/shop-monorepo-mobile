@@ -73,7 +73,7 @@
           "fontFamily": "Libre Caslon Text",
           "fontWeight": "400",
           "fontSize": "48",
-          "lineHeight": "1.2",
+          "lineHeight": "120%",
           "letterSpacing": "-2%"
         },
         "type": "typography"
@@ -83,7 +83,7 @@
           "fontFamily": "Libre Caslon Text",
           "fontWeight": "400",
           "fontSize": "32",
-          "lineHeight": "1.3"
+          "lineHeight": "130%"
         },
         "type": "typography"
       },
@@ -92,7 +92,7 @@
           "fontFamily": "Libre Caslon Text",
           "fontWeight": "400",
           "fontSize": "24",
-          "lineHeight": "1.4"
+          "lineHeight": "140%"
         },
         "type": "typography"
       },
@@ -101,7 +101,7 @@
           "fontFamily": "Manrope",
           "fontWeight": "600",
           "fontSize": "18",
-          "lineHeight": "1.5",
+          "lineHeight": "150%",
           "letterSpacing": "2%"
         },
         "type": "typography"
@@ -111,7 +111,7 @@
           "fontFamily": "Manrope",
           "fontWeight": "400",
           "fontSize": "16",
-          "lineHeight": "1.6"
+          "lineHeight": "160%"
         },
         "type": "typography"
       },
@@ -120,7 +120,7 @@
           "fontFamily": "Manrope",
           "fontWeight": "400",
           "fontSize": "14",
-          "lineHeight": "1.6"
+          "lineHeight": "160%"
         },
         "type": "typography"
       },
@@ -129,7 +129,7 @@
           "fontFamily": "Manrope",
           "fontWeight": "700",
           "fontSize": "12",
-          "lineHeight": "1.2",
+          "lineHeight": "120%",
           "letterSpacing": "8%"
         },
         "type": "typography"
@@ -139,7 +139,7 @@
           "fontFamily": "Manrope",
           "fontWeight": "500",
           "fontSize": "11",
-          "lineHeight": "1.2"
+          "lineHeight": "120%"
         },
         "type": "typography"
       },
@@ -148,7 +148,7 @@
           "fontFamily": "Libre Caslon Text",
           "fontWeight": "400",
           "fontSize": "28",
-          "lineHeight": "1.3"
+          "lineHeight": "130%"
         },
         "type": "typography"
       },
@@ -157,7 +157,7 @@
           "fontFamily": "Pretendard",
           "fontWeight": "400",
           "fontSize": "16",
-          "lineHeight": "1.7"
+          "lineHeight": "170%"
         },
         "type": "typography"
       },
@@ -166,7 +166,7 @@
           "fontFamily": "Pretendard",
           "fontWeight": "400",
           "fontSize": "14",
-          "lineHeight": "1.7"
+          "lineHeight": "170%"
         },
         "type": "typography"
       },
@@ -175,7 +175,7 @@
           "fontFamily": "Pretendard",
           "fontWeight": "700",
           "fontSize": "12",
-          "lineHeight": "1.2",
+          "lineHeight": "120%",
           "letterSpacing": "4%"
         },
         "type": "typography"
@@ -185,7 +185,7 @@
           "fontFamily": "Pretendard",
           "fontWeight": "500",
           "fontSize": "11",
-          "lineHeight": "1.2"
+          "lineHeight": "120%"
         },
         "type": "typography"
       },
@@ -194,7 +194,7 @@
           "fontFamily": "Pretendard",
           "fontWeight": "600",
           "fontSize": "18",
-          "lineHeight": "1.5"
+          "lineHeight": "150%"
         },
         "type": "typography"
       }

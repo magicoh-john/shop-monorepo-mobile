@@ -53,77 +53,77 @@ typography:
     fontFamily: Libre Caslon Text
     fontSize: 48px
     fontWeight: '400'
-    lineHeight: '1.2'
+    lineHeight: '120%'
     letterSpacing: -0.02em
   headline-lg:
     fontFamily: Libre Caslon Text
     fontSize: 32px
     fontWeight: '400'
-    lineHeight: '1.3'
+    lineHeight: '130%'
   headline-md:
     fontFamily: Libre Caslon Text
     fontSize: 24px
     fontWeight: '400'
-    lineHeight: '1.4'
+    lineHeight: '140%'
   headline-sm:
     fontFamily: Manrope
     fontSize: 18px
     fontWeight: '600'
-    lineHeight: '1.5'
+    lineHeight: '150%'
     letterSpacing: 0.02em
   body-lg:
     fontFamily: Manrope
     fontSize: 16px
     fontWeight: '400'
-    lineHeight: '1.6'
+    lineHeight: '160%'
   body-md:
     fontFamily: Manrope
     fontSize: 14px
     fontWeight: '400'
-    lineHeight: '1.6'
+    lineHeight: '160%'
   label-lg:
     fontFamily: Manrope
     fontSize: 12px
     fontWeight: '700'
-    lineHeight: '1.2'
+    lineHeight: '120%'
     letterSpacing: 0.08em
   label-md:
     fontFamily: Manrope
     fontSize: 11px
     fontWeight: '500'
-    lineHeight: '1.2'
+    lineHeight: '120%'
   headline-lg-mobile:
     fontFamily: Libre Caslon Text
     fontSize: 28px
     fontWeight: '400'
-    lineHeight: '1.3'
+    lineHeight: '130%'
   # 한국어 전용 토큰 (Pretendard)
   ko-body-lg:
     fontFamily: Pretendard
     fontSize: 16px
     fontWeight: '400'
-    lineHeight: '1.7'
+    lineHeight: '170%'
   ko-body-md:
     fontFamily: Pretendard
     fontSize: 14px
     fontWeight: '400'
-    lineHeight: '1.7'
+    lineHeight: '170%'
   ko-label-lg:
     fontFamily: Pretendard
     fontSize: 12px
     fontWeight: '700'
-    lineHeight: '1.2'
+    lineHeight: '120%'
     letterSpacing: 0.04em
   ko-label-md:
     fontFamily: Pretendard
     fontSize: 11px
     fontWeight: '500'
-    lineHeight: '1.2'
+    lineHeight: '120%'
   ko-headline-sm:
     fontFamily: Pretendard
     fontSize: 18px
     fontWeight: '600'
-    lineHeight: '1.5'
+    lineHeight: '150%'
 rounded:
   sm: 0.25rem
   DEFAULT: 0.5rem
