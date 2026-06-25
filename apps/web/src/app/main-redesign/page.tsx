@@ -1,11 +1,14 @@
 /**
- * [Server Component] 메인 페이지 리디자인 — 정적 프리뷰 (3차 접근)
+ * [Server Component] 메인 페이지 리디자인 — 정적 프리뷰
  *
  * 목적: 운영 중인 `(shop)/page.tsx`를 직접 건드리지 않고, 디자인 헌법(DESIGN.md)과
  * 실제 Figma 디자인(node-id 1:3)만 반영한 정적 화면을 먼저 완성해 검증하기 위한
- * 별도 라우트다. 이 단계에서는 Prisma 쿼리·비즈니스 로직을 일절 사용하지 않는다 —
- * 카테고리/상품 데이터는 docs/design/pages/main.md에 적힌 Figma 샘플 데이터를
- * 그대로 하드코딩한 정적 값이다.
+ * 별도 라우트다. 이 단계에서는 Prisma 쿼리·비즈니스 로직을 일절 사용하지 않는다.
+ *
+ * 텍스트/이미지는 Figma MCP `get_design_context`로 섹션별 노드(1:5, 1:4, 1:20, 1:82,
+ * 1:102, 1:150)를 직접 추출해 정합시킨 값이다 — 프로즈 스펙(main.md)을 보고 다시
+ * 손으로 작성하는 방식은 디자인 드리프트를 유발해 폐기했다. 이미지 src는 Figma 임시
+ * CDN URL(7일 만료)이므로, 만료 시 get_design_context를 재호출해 교체해야 한다.
  *
  * 검증 통과 후 다음 단계(Prisma 데이터 점진 적용)는 이 파일을 기준으로 진행한다.
  */
@@ -14,18 +17,20 @@ import { Share2, Camera, PlayCircle } from 'lucide-react';
 
 const CATEGORIES = ['패션의류', '신발/가방', '액세서리', '뷰티', '스포츠'];
 
+// 이미지: Figma 원본 에셋(get_design_context로 추출). Figma 임시 CDN URL — 7일 후 만료되므로
+// 만료 시 Figma MCP get_design_context를 재호출해 새 URL로 갈아끼워야 한다.
 const NEW_ARRIVALS = [
-  { id: 'n1', brand: 'LÉMUELL', name: 'Structured Wool Blazer', price: '$345.00', image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=600&h=600&fit=crop&auto=format' },
-  { id: 'n2', brand: 'MINSÉ', name: 'Pure Cashmere Scarf', price: '$120.00', image: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600&h=600&fit=crop&auto=format' },
-  { id: 'n3', brand: 'OEUVE', name: 'Mini Moon Leather Bag', price: '$280.00', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&h=600&fit=crop&auto=format' },
-  { id: 'n4', brand: 'RECTO', name: 'Square Toe Ankle Boots', price: '$410.00', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&h=600&fit=crop&auto=format' },
+  { id: 'n1', brand: 'LÉMUELL', name: 'Structured Wool Blazer', price: '$345.00', image: 'https://www.figma.com/api/mcp/asset/2c85049b-35aa-4112-9a9a-68d9dc71d166' },
+  { id: 'n2', brand: 'MINSÉ', name: 'Pure Cashmere Scarf', price: '$120.00', image: 'https://www.figma.com/api/mcp/asset/095a91bf-b73f-4d09-b570-d96e09f3e9f7' },
+  { id: 'n3', brand: 'OEUVE', name: 'Mini Moon Leather Bag', price: '$280.00', image: 'https://www.figma.com/api/mcp/asset/474f8ea6-6ce6-40f6-aa24-d21dc916a692' },
+  { id: 'n4', brand: 'RECTO', name: 'Square Toe Ankle Boots', price: '$410.00', image: 'https://www.figma.com/api/mcp/asset/e20166c7-5676-4348-a829-90938143d888' },
 ];
 
 const BEAUTY_PICKS = [
-  { id: 'b1', category: 'SKINCARE', name: 'Deep Sea Essence', price: '$65.00', image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=500&h=500&fit=crop&auto=format' },
-  { id: 'b2', category: 'MAKEUP', name: 'Satin Glide Lipstick', price: '$32.00', image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&h=500&fit=crop&auto=format' },
-  { id: 'b3', category: 'MAKEUP', name: 'Glow Cushion Foundation', price: '$48.00', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&h=500&fit=crop&auto=format' },
-  { id: 'b4', category: 'HAIR CARE', name: 'Midnight Repair Oil', price: '$55.00', image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&h=500&fit=crop&auto=format' },
+  { id: 'b1', category: 'SKINCARE', name: 'Deep Sea Essence', price: '$65.00', image: 'https://www.figma.com/api/mcp/asset/5e0d0763-1231-42d0-a4e2-287e4f4da9fc' },
+  { id: 'b2', category: 'MAKEUP', name: 'Satin Glide Lipstick', price: '$32.00', image: 'https://www.figma.com/api/mcp/asset/82b4dc1b-77c7-4853-be08-d3bd8a7a770c' },
+  { id: 'b3', category: 'MAKEUP', name: 'Glow Cushion Foundation', price: '$48.00', image: 'https://www.figma.com/api/mcp/asset/0d935aa7-e777-4893-b58a-c0e5a92df1ee' },
+  { id: 'b4', category: 'HAIR CARE', name: 'Midnight Repair Oil', price: '$55.00', image: 'https://www.figma.com/api/mcp/asset/5aaa69ec-3ed6-4671-878d-04d08b8a8aa1' },
 ];
 
 export default function MainRedesignPreviewPage() {
@@ -35,7 +40,7 @@ export default function MainRedesignPreviewPage() {
       {/* 2. Hero Banner */}
       <section className="relative w-full min-h-[640px] flex items-center justify-center overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1600&h=1200&fit=crop&auto=format"
+          src="https://www.figma.com/api/mcp/asset/5bf4815c-e91e-4625-b74e-81d054da7c2f"
           alt="AW 2024 Collection"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -107,7 +112,7 @@ export default function MainRedesignPreviewPage() {
           <div className="md:col-span-7">
             <div className="aspect-[4/3] md:aspect-auto md:h-full rounded-dm-xl overflow-hidden bg-dm-surface-container-high">
               <img
-                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&h=900&fit=crop&auto=format"
+                src="https://www.figma.com/api/mcp/asset/0bdf89b4-fdd1-4029-a107-bf469e0217b1"
                 alt="Designer of the month"
                 className="w-full h-full object-cover"
               />
@@ -129,14 +134,14 @@ export default function MainRedesignPreviewPage() {
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div className="aspect-square rounded-dm-lg overflow-hidden bg-dm-surface-container-high">
                 <img
-                  src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=600&fit=crop&auto=format"
+                  src="https://www.figma.com/api/mcp/asset/97c6f5cc-3754-4cd3-8d8f-1c2fda96d682"
                   alt="텍스처 디테일"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="aspect-square rounded-dm-lg overflow-hidden bg-dm-surface-container-high">
                 <img
-                  src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&h=600&fit=crop&auto=format"
+                  src="https://www.figma.com/api/mcp/asset/0eba8153-ff09-48ca-9d6a-76aceaabc254"
                   alt="텍스처 디테일"
                   className="w-full h-full object-cover"
                 />
