@@ -16,7 +16,7 @@
       "outline": { "value": "#737973", "type": "color" },
       "outline-variant": { "value": "#c3c8c1", "type": "color" },
       "surface-tint": { "value": "#4d6453", "type": "color" },
-      "primary": { "value": "#061b0e", "type": "color" },
+      "primary": { "value": "#4d6453", "type": "color" },
       "on-primary": { "value": "#ffffff", "type": "color" },
       "primary-container": { "value": "#1b3022", "type": "color" },
       "on-primary-container": { "value": "#819986", "type": "color" },
