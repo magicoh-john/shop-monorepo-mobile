@@ -140,13 +140,15 @@ spacing:
   stack-sm: 8px
   stack-md: 16px
   stack-lg: 24px
+  button-padding-x: 24px
+  button-padding-y: 12px
 components:
   button-primary:
     backgroundColor: '{colors.primary}'
     textColor: '{colors.on-primary}'
     rounded: '{rounded.md}'
     typography: '{typography.label-lg}'
-    padding: 12px 24px
+    padding: '{spacing.button-padding-y} {spacing.button-padding-x}'
   button-primary-hover:
     backgroundColor: '{colors.primary-container}'
     textColor: '{colors.on-primary}'
@@ -155,7 +157,7 @@ components:
     textColor: '{colors.primary}'
     rounded: '{rounded.md}'
     typography: '{typography.label-lg}'
-    padding: 12px 24px
+    padding: '{spacing.button-padding-y} {spacing.button-padding-x}'
   button-ghost-hover:
     backgroundColor: '{colors.surface-container-low}'
     textColor: '{colors.primary}'
