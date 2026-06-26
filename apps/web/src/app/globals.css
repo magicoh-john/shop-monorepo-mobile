@@ -18,13 +18,16 @@
   --color-dm-on-surface-variant: #434843;
   --color-dm-outline: #737973;
   --color-dm-outline-variant: #c3c8c1;
-  --color-dm-primary: #061b0e;
+  --color-dm-primary: #4d6453;
   --color-dm-on-primary: #ffffff;
   --color-dm-primary-container: #1b3022;
   --color-dm-on-primary-container: #819986;
   --color-dm-secondary: #9f402d;
   --color-dm-on-secondary: #ffffff;
   --color-dm-secondary-container: #fd876f;
+  --color-dm-error: #ba1a1a;
+  --color-dm-error-container: #ffdad6;
+  --color-dm-on-error-container: #93000a;
 
   --font-dm-display: var(--font-libre-caslon-text), serif;
   --font-dm-body: var(--font-manrope), sans-serif;

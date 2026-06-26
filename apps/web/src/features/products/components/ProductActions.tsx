@@ -54,39 +54,39 @@ export default function ProductActions({ product }: { product: Product }) {
   const soldOut = product.stock === 0;  // 재고가 0인 경우 품절로 간주
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-3">
-        <span className="text-sm text-muted-foreground w-8">수량</span>
-        <div className="flex items-center border border-border rounded-[calc(var(--radius)-2px)]">
+    <div className="flex flex-col gap-4 w-full">
+      <div className="flex items-center gap-4">
+        <span className="font-dm-ko text-sm text-dm-on-surface-variant">수량</span>
+        <div className="flex items-center border border-dm-outline-variant rounded-dm-md text-dm-on-surface">
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
             disabled={quantity <= 1}
-            className="w-9 h-9 flex items-center justify-center hover:bg-accent transition-colors disabled:opacity-40"
+            className="size-9 flex items-center justify-center font-dm-body text-sm disabled:opacity-40"
           >
             −
           </button>
-          <span className="w-10 text-center text-sm font-medium">{quantity}</span>
+          <span className="w-10 h-9 flex items-center justify-center font-dm-body text-sm">{quantity}</span>
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
             disabled={soldOut || quantity >= product.stock}
-            className="w-9 h-9 flex items-center justify-center hover:bg-accent transition-colors disabled:opacity-40"
+            className="size-9 flex items-center justify-center font-dm-body text-sm disabled:opacity-40"
           >
             +
           </button>
         </div>
         {!soldOut && (
-          <span className="text-xs text-muted-foreground">재고 {product.stock}개</span>
+          <span className="font-dm-ko text-[11px] font-medium text-dm-on-surface-variant">재고 {product.stock}개</span>
         )}
       </div>
 
-      <div className="flex flex-col gap-2 mt-2">
+      <div className="flex flex-col gap-2 w-full">
         <button
           type="button"
           onClick={handleOrder}
           disabled={soldOut}
-          className="w-full bg-primary text-primary-foreground py-3 rounded-[calc(var(--radius)-2px)] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full bg-dm-primary text-dm-on-primary px-6 py-3 rounded-dm-md font-dm-body text-xs font-bold tracking-[0.08em] disabled:opacity-50"
         >
           {soldOut ? '품절' : '주문하기'}
         </button>
@@ -94,13 +94,13 @@ export default function ProductActions({ product }: { product: Product }) {
           type="button"
           onClick={handleAddToCart}
           disabled={soldOut}
-          className="w-full border border-primary text-primary py-3 rounded-[calc(var(--radius)-2px)] font-semibold hover:bg-accent transition-colors disabled:opacity-50"
+          className="w-full border border-dm-primary text-dm-primary px-6 py-3 rounded-dm-md font-dm-body text-xs font-bold tracking-[0.08em] disabled:opacity-50"
         >
           장바구니 담기
         </button>
         <button
           type="button"
-          className="w-full border border-border text-foreground py-3 rounded-[calc(var(--radius)-2px)] font-medium hover:bg-accent transition-colors flex items-center justify-center gap-2"
+          className="w-full border border-dm-outline-variant text-dm-on-surface px-6 py-3 rounded-dm-md font-dm-body text-xs font-bold tracking-[0.08em] flex items-center justify-center gap-2"
         >
           <Heart size={16} />
           찜하기
