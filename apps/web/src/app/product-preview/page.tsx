@@ -14,7 +14,7 @@ const recentProducts = [
 
 export default function ProductPreviewPage() {
   return (
-    <div className="flex flex-col gap-20 px-10 py-10">
+    <div className="flex flex-col gap-20 max-w-[1280px] mx-auto px-10 py-10">
       <div className="flex gap-6 items-start">
         <div className="bg-dm-surface-container-low rounded-dm-md size-[588px] shrink-0 flex items-end p-5">
           <p className="font-dm-body text-xs font-bold tracking-[0.08em] text-dm-on-surface-variant">
