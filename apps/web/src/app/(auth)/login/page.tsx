@@ -8,11 +8,8 @@ export default async function LoginPage({
   const { error } = await searchParams;
 
   return (
-    <div className="flex flex-col items-center gap-4 px-4">
-      <h1 className="font-dm-display text-2xl text-dm-on-surface">로그인</h1>
-      <div className="bg-dm-surface-container-lowest border border-dm-outline-variant rounded-dm-md p-6 w-full max-w-[400px] flex flex-col gap-4">
-        <LoginForm error={error} />
-      </div>
+    <div className="bg-card text-card-foreground rounded-[var(--radius)] border border-border shadow-sm p-6 w-full max-w-sm space-y-4">
+      <LoginForm error={error} />
     </div>
   );
 }

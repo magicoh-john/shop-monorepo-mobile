@@ -11,7 +11,6 @@ import { prisma } from '@my-project/database';
 import ProductImage from '@/features/products/components/ProductImage';
 import RecentTracker from '@/features/products/components/RecentTracker';
 import ProductActions from '@/features/products/components/ProductActions';
-import RecentlyViewedSection from '@/features/products/components/RecentlyViewedSection';
 /**
  * 상품 상세 페이지 컴포넌트
  * - 서버 컴포넌트로, 상품 ID를 받아 해당 상품의 상세 정보를 데이터베이스에서 조회하여 렌더링
@@ -42,62 +41,60 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   };
 
   return (
-    <div className="flex flex-col gap-20 bg-dm-surface font-dm-body px-10 pt-10 pb-20">
+    <div className="max-w-5xl mx-auto px-6 py-10">
       <RecentTracker product={productForClient} />
 
-      {/* Section 1-2: 이미지 + 정보 */}
-      <div className="flex flex-col md:flex-row gap-6 w-full">
+      {/* 상단: 이미지 + 정보/액션 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* 좌: 상품 이미지 */}
-        <div className="rounded-dm-md overflow-hidden bg-dm-surface-container-low shrink-0 size-full md:size-[588px]">
+        <div className="aspect-square rounded-[var(--radius)] overflow-hidden border border-border">
           <ProductImage src={product.imageUrl} alt={product.name} />
         </div>
 
         {/* 우: 상품 정보 + 액션 */}
-        <div className="flex flex-1 flex-col gap-4 min-w-0">
+        <div className="flex flex-col gap-3">
           {product.category && (
-            <p className="font-dm-ko text-[11px] font-medium text-dm-on-surface-variant">{product.category.name}</p>
+            <p className="text-sm text-muted-foreground">{product.category.name}</p>
           )}
-          <h1 className="font-dm-display text-2xl text-dm-on-surface">{product.name}</h1>
-          <p className="font-dm-body text-lg font-semibold text-dm-on-surface tracking-[0.02em]">{product.price.toLocaleString()}원</p>
+          <h1 className="text-2xl font-bold text-foreground">{product.name}</h1>
+          <p className="text-3xl font-bold text-primary mt-1">{product.price.toLocaleString()}원</p>
 
-          <hr className="border-dm-outline-variant" />
+          <hr className="border-border my-2" />
 
           <ProductActions product={productForClient} />
-
-          <hr className="border-dm-outline-variant" />
-
-          <div className="flex flex-col gap-2 font-dm-ko text-sm text-dm-on-surface-variant">
-            <p>🚚 무료배송 · 오늘 출고 시 내일 도착 예정</p>
-            <p>💰 구매 시 적립금 2% 지급</p>
-          </div>
         </div>
       </div>
 
-      {/* Section 4: 상세 설명 */}
-      <section className="flex flex-col gap-6 w-full">
-        <h2 className="font-dm-display text-2xl text-dm-on-surface">상세 설명</h2>
-        {product.description ? (
-          <p className="font-dm-ko text-base text-dm-on-surface-variant leading-relaxed whitespace-pre-line">
-            {product.description}
-          </p>
-        ) : (
-          <p className="font-dm-ko text-sm text-dm-on-surface-variant text-center py-6">상세 정보가 없습니다.</p>
-        )}
-        {product.imageUrl && (
-          <div className="rounded-dm-md overflow-hidden bg-dm-surface-container-low">
-            <img src={product.imageUrl} alt={product.name} className="w-full object-cover" />
+      {/* 리뷰 섹션 */}
+      <section className="mt-16">
+        <h2 className="text-xl font-semibold text-foreground mb-4">리뷰</h2>
+        <div className="border border-border rounded-[var(--radius)] p-10 text-center text-muted-foreground text-sm">
+          아직 리뷰가 없습니다.
+        </div>
+      </section>
+
+      {/* 상품 상세정보 섹션 */}
+      <section className="mt-10">
+        <h2 className="text-xl font-semibold text-foreground mb-4">상품 상세정보</h2>
+        <div className="border border-border rounded-[var(--radius)] overflow-hidden">
+          {product.imageUrl && (
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="w-full object-cover"
+            />
+          )}
+          <div className="p-6">
+            {product.description ? (
+              <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
+                {product.description}
+              </p>
+            ) : (
+              <p className="text-sm text-muted-foreground text-center py-6">상세 정보가 없습니다.</p>
+            )}
           </div>
-        )}
+        </div>
       </section>
-
-      {/* Section 5: 리뷰 */}
-      <section className="flex flex-col gap-4 w-full">
-        <h2 className="font-dm-display text-2xl text-dm-on-surface">리뷰</h2>
-        <p className="font-dm-ko text-sm text-dm-on-surface-variant">아직 리뷰가 없습니다</p>
-      </section>
-
-      {/* Section 6: 최근 본 상품 */}
-      <RecentlyViewedSection />
     </div>
   );
 }
