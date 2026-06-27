@@ -7,6 +7,29 @@
 
 ---
 
+## 🎨 디자인 작업 시 필수 참조 순서
+
+UI/페이지 구현 작업 전 AI는 반드시 아래 순서로 확인한다.
+
+1. `docs/design/DESIGN.md` 먼저 읽기 — 색상/타이포그래피/spacing/컴포넌트 토큰의 단일 기준(디자인 헌법)
+2. 해당 페이지의 `docs/design/pages/<page>.md` 읽기 — 섹션 구성, 레이아웃, 사용 컴포넌트 명세
+3. Figma 원본 raw 값(hex, px)보다 `DESIGN.md` 토큰을 항상 우선한다 — Figma는 레이아웃 참고용 초안이며 토큰 매핑이 기준
+4. **hex 값/임의 px 직접 사용 금지** — 항상 `{colors.*}`, `{typography.*}`, `{spacing.*}`, `{rounded.*}` 토큰 참조로 구현
+5. 새 페이지 명세 작성 시 `docs/design/page-template.md` 구조를 따른다
+
+### 🔍 Figma 화면 생성/수정 후 필수 검증
+
+Figma에서 화면을 만들거나 수정한 직후, 코드화 이전에 반드시 아래를 검증한다.
+raw 값이 `DESIGN.md`와 일치해도 Figma Variable/Text Style 바인딩이 없으면 미완료로 간주한다 — 바인딩이 없으면 디자이너가 토큰을 바꿔도 코드가 따라가지 못해 일관성·확장성이 깨진다.
+
+1. 색상(fills/strokes) → Figma **Variable** 바인딩 확인
+2. 타이포그래피 → Figma **Text Style**(`setTextStyleIdAsync`) 연결 확인 — 숫자값 직접 입력 금지
+3. spacing/padding/radius → Figma **Variable** 바인딩 확인
+4. 대응 토큰/Variable이 없으면 임의 생성 금지 → 사용자 확인 후 신규 등록 + `DESIGN.md` 동시 갱신
+5. 검증 결과(바인딩 비율)를 사용자에게 보고
+
+---
+
 # CLAUDE.md — 쇼핑몰 앱 (Shopping Mall)
 
 이 파일은 이 프로젝트에 특화된 내용만 기술한다.

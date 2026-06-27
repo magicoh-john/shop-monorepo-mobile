@@ -28,6 +28,51 @@
 
 ---
 
+## 검증 대기 — 메인 페이지 디자인 리디자인 (2026-06-24)
+
+브랜치 `claude/confident-bardeen-vkbwl5`에 메인 페이지(`apps/web/src/app/(shop)/page.tsx`) Figma 기반
+리디자인이 커밋·푸시되어 있다. AI 작업 환경(샌드박스)은 네트워크 제한으로 Prisma 엔진 다운로드가
+실패해 `pnpm dev` 실행 및 브라우저 확인을 하지 못했다 — **로컬에서 아래 절차로 직접 확인 필요**.
+
+### 로컬 테스트 절차
+
+1. **브랜치 가져오기 & 전환**
+   ```bash
+   git fetch origin claude/confident-bardeen-vkbwl5
+   git checkout claude/confident-bardeen-vkbwl5
+   ```
+2. **의존성 설치 (최초 1회 또는 package.json 변경 시)**
+   ```bash
+   pnpm install
+   ```
+3. **Prisma 클라이언트 생성** (이 작업에서 새 마이그레이션은 없지만, 로컬에 클라이언트가 없다면 필요)
+   ```bash
+   pnpm --filter @my-project/database exec npx prisma generate
+   ```
+4. **개발 서버 실행**
+   ```bash
+   pnpm --filter web dev
+   ```
+5. **브라우저 확인**: `http://localhost:3000` (또는 콘솔에 출력된 포트) 접속
+
+### 확인 포인트 (체크리스트)
+
+- [ ] Hero Banner — 다크 그린 배경(`colors.primary`) 위 중앙 정렬 헤딩 + "SHOP NOW" pill 버튼 노출
+- [ ] Category Tab — 대카테고리들이 가로 스크롤 탭으로 노출, 클릭 시 `/categories/[slug]`로 이동
+- [ ] New Arrivals — 신상품 8개가 4-up(데스크탑)/2-up(모바일) 그리드로 표시, "VIEW ALL" 링크 동작
+- [ ] Brand Spotlight — 이미지(좌)+텍스트(우) 비대칭 배치, 모바일에서는 세로 스택으로 전환
+- [ ] Beauty Picks — 베스트상품(8개)이 가로 스크롤 카드로 표시 (별도 "뷰티" DB 쿼리가 없어 베스트상품 데이터를 재사용한 것이 의도된 동작임)
+- [ ] Newsletter — 다크 그린 배경, 중앙 정렬 이메일 입력 폼 + SUBMIT 버튼
+- [ ] 한글 텍스트(상품명, 카테고리명 등)가 Pretendard 폰트로 깨지지 않고 렌더링되는지 확인
+- [ ] 기존 기능(전체상품 무한스크롤, 최근 본 상품, 장바구니 이동 등) 회귀 없이 정상 동작하는지 확인
+- [ ] 반응형: 브라우저 너비를 줄여 모바일 레이아웃(2컬럼, 가로 스크롤 등) 확인
+
+### 문제 발견 시
+- 화면이 비정상이면 브라우저 개발자도구 콘솔 에러를 먼저 확인 (Prisma 클라이언트 미생성 시 타입/런타임 에러 가능)
+- 디자인 토큰 불일치(hex 직접 사용 등) 발견 시 `docs/design/DESIGN.md` 토큰 기준으로 수정 요청
+
+---
+
 ## 다음 작업
 
 **스펙 07 — 키워드 검색** (`docs/specs/07-search.md` 참고)
