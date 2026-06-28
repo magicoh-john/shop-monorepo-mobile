@@ -8,9 +8,11 @@ import Google from "next-auth/providers/google";
 import Kakao from "next-auth/providers/kakao";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { cookies } from "next/headers";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { authConfig } from "@/auth.config";
 import { loginSchema } from "@/schemas/auth.schema";
+import { mergeGuestCart } from "@/lib/cart";
 import { prisma } from "@my-project/database";
 
 // NextAuth()가 반환하는 4가지를 그대로 다른 곳에서 가져다 쓴다.
@@ -98,6 +100,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (account?.provider === "kakao" && !user.email) {
         return "/login?error=KakaoEmailRequired";
       }
+
+      // 비로그인 상태로 담아둔 게스트 장바구니를 로그인 계정 장바구니로 병합한다.
+      // Redis 오류가 로그인 자체를 막으면 안 되므로 실패를 흡수한다.
+      if (user.id) {
+        try {
+          const cookieStore = await cookies();
+          const sessionId = cookieStore.get("cart_session")?.value;
+          await mergeGuestCart(sessionId, user.id);
+        } catch (err) {
+          // 장바구니 병합 실패는 로그인 흐름에 영향을 주지 않는다. 원인 추적용 로그만 남긴다.
+          console.error("[mergeGuestCart] 게스트 장바구니 병합 실패:", err);
+        }
+      }
+
       return true;
     },
 
