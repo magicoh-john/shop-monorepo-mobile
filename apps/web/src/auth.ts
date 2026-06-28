@@ -108,8 +108,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           const cookieStore = await cookies();
           const sessionId = cookieStore.get("cart_session")?.value;
           await mergeGuestCart(sessionId, user.id);
-        } catch {
-          // 장바구니 병합 실패는 로그인 흐름에 영향을 주지 않는다.
+        } catch (err) {
+          // 장바구니 병합 실패는 로그인 흐름에 영향을 주지 않는다. 원인 추적용 로그만 남긴다.
+          console.error("[mergeGuestCart] 게스트 장바구니 병합 실패:", err);
         }
       }
 
