@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"EXIT_CODE=$?\")",
+      "Bash(docker exec *)",
+      "Bash(docker start *)",
+      "Bash(git rebase *)",
+      "Bash(git merge *)",
+      "Bash(git reset *)",
+      "Bash(gh pr create --title 'fix: BottomNav 장바구니 뱃지를 CartIcon과 동일한 서버 사이드 방식으로 통일' --body ' *)",
+      "Bash(pkill -f \"prisma studio\")",
+      "Bash(node -e ' *)",
+      "Bash(which psql *)",
+      "Bash(PGPASSWORD=1234 psql -h localhost -U postgres -d shopping_app -c \"select id, email from \\\\\"User\\\\\" where email='admin@test.com';\")",
+      "Bash(PGPASSWORD=1234 psql -h localhost -U postgres -d shopping_app -c \"\\\\dt\")",
+      "Bash(PGPASSWORD=1234 psql -h localhost -U postgres -d shopping_app -c \"select id, email from users where email='admin@test.com';\")",
+      "Bash(gh pr *)",
+      "Bash(gh pr create --title 'feat: 로그인 시 게스트 장바구니를 계정 장바구니로 병합' --body ' *)",
+      "Bash(git branch *)",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm --filter web run lint)",
+      "Bash(pnpm --filter web run typecheck)",
+      "Bash(npx lint-staged *)",
+      "Bash(gh pr create --title 'feat: ESLint + 타입체크 + pre-commit 훅 설정 \\(apps/web\\)' --body ' *)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/project/shop-monorepo-mobile/.claude/settings.json','utf8'\\)\\); console.log\\('valid JSON'\\)\")"
+    ]
+  },
+  "plansDirectory": "docs/plan-archive"
+}
