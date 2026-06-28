@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, LayoutGrid, ShoppingCart, User } from 'lucide-react';
-import { useCartStore } from '@/store/cartStore';
 
 const tabs = [
   { href: '/', icon: Home, label: '홈' },
@@ -12,9 +11,12 @@ const tabs = [
   { href: '/mypage', icon: User, label: '마이쇼핑' },
 ];
 
-export default function BottomNav() {
+interface Props {
+  totalCount: number;
+}
+
+export default function BottomNav({ totalCount }: Props) {
   const pathname = usePathname();
-  const totalCount = useCartStore((s) => s.totalCount());
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-background border-t border-border">
