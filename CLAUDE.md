@@ -280,6 +280,7 @@ git checkout -b hotfix/긴급수정  # 긴급 수정
 - User.password는 현재 필수값 → Google OAuth 도입 시 nullable로 마이그레이션
 - 카테고리(Category 테이블) → 스펙 01-2에서 추가. Product.category(String)를 categoryId(관계)로 변경
 - 오늘특가/신상품/베스트는 카테고리가 아닌 큐레이션 — 홈 화면 별도 섹션으로 구성
+- ESLint·타입체크·git pre-commit 훅(husky+lint-staged)을 `apps/web`에 도입(`apps/mobile`·`packages/*`는 제외). Next.js 16에서 `next lint`가 제거되어 ESLint CLI(flat config)로 직접 구성. 배경과 구체 설정은 [docs/notes/lint-typecheck-precommit-setup.md](docs/notes/lint-typecheck-precommit-setup.md) 참고
 
 ### 카테고리 전략
 
