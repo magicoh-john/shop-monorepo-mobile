@@ -22,7 +22,9 @@
       "Bash(pnpm --filter web run typecheck)",
       "Bash(npx lint-staged *)",
       "Bash(gh pr create --title 'feat: ESLint + 타입체크 + pre-commit 훅 설정 \\(apps/web\\)' --body ' *)",
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/project/shop-monorepo-mobile/.claude/settings.json','utf8'\\)\\); console.log\\('valid JSON'\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('c:/project/shop-monorepo-mobile/.claude/settings.json','utf8'\\)\\); console.log\\('valid JSON'\\)\")",
+      "Bash(gh pr create --title 'chore: Claude Code plan 파일을 프로젝트 내부에 저장하도록 설정' --body ' *)",
+      "Bash(gh api *)"
     ]
   },
   "plansDirectory": "docs/plan-archive"
