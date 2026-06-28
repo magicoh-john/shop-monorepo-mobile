@@ -8,6 +8,15 @@
   "scripts": {
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
-    "start": "pnpm --filter web start"
+    "start": "pnpm --filter web start",
+    "lint": "eslint .",
+    "typecheck": "pnpm --filter web run typecheck",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.9",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8"
   }
 }
