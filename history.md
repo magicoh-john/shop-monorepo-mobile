@@ -4,6 +4,25 @@
 
 ---
 
+## 2026-06-24
+
+### 메인 페이지 디자인 자동화 — Figma 기반 리디자인 적용
+
+- **변경 파일**:
+  - `docs/design/page-template.md` — 신규: 페이지 명세 표준 템플릿
+  - `docs/design/pages/main.md` — 신규: 메인 페이지 명세 (Figma node 1:3 기반, DESIGN.md 토큰 매핑)
+  - `CLAUDE.md` — "🎨 디자인 작업 시 필수 참조 순서" 규칙 추가 (DESIGN.md → pages/<page>.md → 토큰 우선 → hex/px 직접 사용 금지)
+  - `apps/web/src/app/(shop)/page.tsx` — Figma 명세 기준 7개 섹션(GNB 제외, Header가 담당) 중 Hero Banner / Category Tab / New Arrivals / Brand Spotlight / Beauty Picks / Newsletter 6개 섹션으로 전면 교체
+  - `apps/web/src/app/globals.css` — `docs/design/DESIGN.md` 토큰을 `--color-dm-*`, `--font-dm-*`, `--radius-dm-*` CSS 변수로 추가 (기존 shadcn 토큰과 충돌 방지 위해 `dm-` 접두사 사용), Pretendard CDN import 추가
+  - `apps/web/src/app/layout.tsx` — Manrope, Libre Caslon Text 폰트(`next/font/google`) 추가
+- **주요 내용**:
+  - 기존 운영 중인 쇼핑몰의 메인 화면을 "바이브 코딩" 방식으로 리디자인. 기존 Prisma 쿼리(categories, newProducts, bestProducts)와 컴포넌트(ProductImage, RecentProducts, ProductGrid)는 그대로 재사용하고 UI만 교체
+  - Brand Spotlight·Beauty Picks·Newsletter처럼 DB에 의미상 정확히 대응하는 데이터가 없는 섹션은 정적 콘텐츠 또는 기존 쿼리 결과(bestProducts)를 재활용 — 완벽한 의미적 매칭은 요구하지 않기로 결정
+  - 브랜치 `claude/confident-bardeen-vkbwl5`에 커밋 및 푸시 완료
+- **검증 미완료 사항**: 작업 환경(샌드박스)에서 네트워크 제한으로 Prisma 엔진 다운로드가 실패하여 `pnpm dev` 구동 및 브라우저 실제 확인을 하지 못함. 로컬 환경에서 직접 확인 필요 (확인 방법은 `work.md` "다음 작업" 섹션 참고)
+
+---
+
 ## 2026-05-31
 
 ### 프로젝트 방향 전환 — 바이브코딩으로 전환
