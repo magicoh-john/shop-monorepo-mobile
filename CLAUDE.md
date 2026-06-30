@@ -47,6 +47,7 @@ AI는 아래 명시된 기술 스택의 **정확한 버전**만을 사용하여 
 | --- | --- | --- |
 | Next.js (App Router) | `16.2.6` | 풀스택 프레임워크 (서버 컴포넌트, API Route) |
 | React | `19.2.4` | UI 라이브러리 |
+| TypeScript | `^5` | 정적 타입 시스템 |
 | Prisma | `7.8.0` | 직관적인 ORM, SQL 스키마 자동 생성 및 타입 제공 |
 | PostgreSQL (`pg`) | `^8.21.0` | 관계형 데이터베이스 드라이버 |
 | NextAuth.js | `^5.0.0-beta.31` | 인증 및 보안 세션 관리 (Auth.js) |
@@ -68,6 +69,11 @@ AI는 아래 명시된 기술 스택의 **정확한 버전**만을 사용하여 
 
 - 유틸리티 클래스 우선, 인라인 style 속성 사용 금지 (Tailwind)
 
+### TypeScript
+
+- `any` 사용 금지
+- 타입 선언은 `type` 대신 `interface` 사용
+
 ### 상태 관리
 
 - props drilling 3단계 이상 금지
@@ -79,6 +85,12 @@ AI는 아래 명시된 기술 스택의 **정확한 버전**만을 사용하여 
 - props는 구조 분해 할당으로 받기
 - 컴포넌트 1개 = 파일 1개
 - 함수형 컴포넌트만 사용, `export default`로 내보내기
+
+### 폴더 규칙
+
+- `components/ui/` — Shadcn 전용, 수정 금지. 커스텀 컴포넌트는 `features/<domain>/components/` 또는 `components/layout/`에 작성
+- `hooks/` — 커스텀 훅 전용 (`use` 접두사 필수, 예: `useChatSocket.ts`)
+- `app/api/` — API Route 전용
 
 ### 네이밍
 

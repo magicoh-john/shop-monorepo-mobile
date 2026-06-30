@@ -1,62 +1,28 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-
-interface Message {
-  id?: string;
-  senderId: string;
-  senderRole: string;
-  content: string;
-}
+import { useChatSocket, type ChatMessage } from "@/hooks/useChatSocket";
 
 interface Room {
   id: string;
   user: { name: string | null; email: string };
-  messages: Message[];
+  messages: ChatMessage[];
 }
 
 interface Props {
   rooms: Room[];
-  activeRoom: (Room & { messages: Message[] }) | null;
+  activeRoom: (Room & { messages: ChatMessage[] }) | null;
   adminId: string;
 }
 
 export default function AdminChatWindow({ rooms, activeRoom, adminId }: Props) {
   const router = useRouter();
-  const [messages, setMessages] = useState<Message[]>(
-    activeRoom?.messages ?? [],
-  );
-  const [input, setInput] = useState("");
-  const ws = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    if (!activeRoom) return;
-
-    setMessages(activeRoom.messages);
-
-    ws.current = new WebSocket(
-      `ws://localhost:3000/ws?roomId=${activeRoom.id}`,
-    );
-    ws.current.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      setMessages((prev) => [...prev, message]);
-    };
-
-    return () => ws.current?.close();
-  }, [activeRoom?.id]);
-
-  const send = () => {
-    if (!input.trim() || !activeRoom) return;
-    ws.current?.send(
-      JSON.stringify({
-        senderId: adminId,
-        senderRole: "admin",
-        content: input,
-      }),
-    );
-    setInput("");
-  };
+  const { messages, input, setInput, send } = useChatSocket({
+    roomId: activeRoom?.id,
+    initialMessages: activeRoom?.messages ?? [],
+    senderId: adminId,
+    senderRole: "admin",
+  });
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 flex gap-6">

@@ -1,43 +1,20 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-
-interface Message {
-  id?: string;
-  senderId: string;
-  senderRole: string;
-  content: string;
-}
+import { useChatSocket, type ChatMessage } from "@/hooks/useChatSocket";
 
 interface Props {
   roomId: string;
-  initialMessages: Message[];
+  initialMessages: ChatMessage[];
   userId: string;
 }
 
 export default function ChatWindow({ roomId, initialMessages, userId }: Props) {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
-  const [input, setInput] = useState("");
-  const ws = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    ws.current = new WebSocket(`ws://localhost:3000/ws?roomId=${roomId}`);
-
-    ws.current.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      setMessages((prev) => [...prev, message]);
-    };
-
-    return () => ws.current?.close();
-  }, [roomId]);
-
-  const send = () => {
-    if (!input.trim()) return;
-    ws.current?.send(
-      JSON.stringify({ senderId: userId, senderRole: "user", content: input }),
-    );
-    setInput("");
-  };
+  const { messages, input, setInput, send } = useChatSocket({
+    roomId,
+    initialMessages,
+    senderId: userId,
+    senderRole: "user",
+  });
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-10">
